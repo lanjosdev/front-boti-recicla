@@ -1,0 +1,44 @@
+.Page {
+    border: 8px solid yellow;
+    min-height: 100dvh;
+    /* overflow-x: hidden; */
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* flex: 1; */
+
+    > div {
+        padding: 2rem;
+        background-color: rgba(127, 255, 212, 0.836);
+        position: sticky;
+        top: 0;
+    }
+    
+    > .mainPage {
+        border: 3px solid rgb(10, 91, 241);
+        flex: 1;
+        
+        padding: 3.2rem var(--p-lateral);
+
+        .main_form {
+            border: 3px solid green;
+            background-color: red;
+            /* height: 1600px; */
+        }
+    }
+
+    > footer {
+        border: 5px solid green;
+        background-color: rgba(0, 255, 255, 0.747);
+        padding: 2rem;
+        position: sticky;
+        bottom: 0;
+    }
+}
+
+
+
+
+
+.Page > .mainPage.Upload {}
