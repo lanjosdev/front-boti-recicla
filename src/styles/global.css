@@ -1,3 +1,4 @@
+/* Fonte local */
 @font-face {
     font-family: 'PF Videotext';
     src: url(../assets/fonts/PFVideotext-regular.otf);
@@ -44,7 +45,7 @@
     /* Tipografia e Espaçamento */
     --font-main: 'PF Videotext';
     --p-vertical: 4rem;
-    --p-lateral: 15px;
+    --p-lateral: 2.2rem;
 
     /* color-scheme: light dark; */
     font-synthesis: none;

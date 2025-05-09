@@ -6,39 +6,48 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    /* flex: 1; */
 
-    > div {
-        padding: 2rem;
-        background-color: rgba(127, 255, 212, 0.836);
-        position: sticky;
-        top: 0;
-    }
     
     > .mainPage {
-        border: 3px solid rgb(10, 91, 241);
+        border: 5px solid yellowgreen;
         flex: 1;
         
-        padding: 3.2rem var(--p-lateral);
-
-        .main_form {
-            border: 3px solid green;
-            background-color: red;
-            /* height: 1600px; */
-        }
-    }
-
-    > footer {
-        border: 5px solid green;
-        background-color: rgba(0, 255, 255, 0.747);
-        padding: 2rem;
-        position: sticky;
-        bottom: 0;
+        padding: 3rem var(--p-lateral);
     }
 }
 
 
+.Page > .mainPage.Cadastro {
+    border: 5px solid red;
+    padding-top: 0;
 
+    .main_top {
 
+        .sub_title {
+            max-width: 35rem;
+            margin: 0 auto;
 
-.Page > .mainPage.Upload {}
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .cta {
+            display: flex;
+            gap: 0.5rem;
+
+            > p {
+                max-width: 35rem;
+            }
+        }
+    }
+
+    .main_form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+
+        .alert_terms {
+            font-size: 1.4rem;
+        }
+    }
+}

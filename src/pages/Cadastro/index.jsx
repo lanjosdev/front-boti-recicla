@@ -10,7 +10,9 @@ import { useNavigate } from "react-router-dom";
 // import UserContext from "../../contexts/userContext";
 
 // Components:
-// import { Footer } from "../../components/Footer/Footer";
+import { Header } from "../../components/Header/Header";
+import { InputCPF } from "../../components/InputCPF/InputCPF";
+import { Footer } from "../../components/Footer/Footer";
 
 // Assets:
 // import imgLogo from '../../assets/images/LOGO-BIZSYS_preto.png';
@@ -27,9 +29,11 @@ export default function Cadastro() {
     const [validationErrors, setValidationErrors] = useState([]);
 
     // Logica UI + Dados a submiter:
-    const [name, setName] = useState('');
-    const [cpf, setCpf] = useState('');
-    const [email, setEmail] = useState('');
+    const [formDataRegister, setFormDataRegister] = useState({
+        name: '',
+        email: '',
+        cpf: ''
+    });
     
     const [showTerms, setShowTerms] = useState(false);
 
@@ -46,34 +50,116 @@ export default function Cadastro() {
     
 
 
+    function handleChangeForm(e) {
+        const { id, value } = e.target;
+        console.log(value)
+        console.log(value.length)
+        
+        if(!id) {
+            console.warn('ID do input alvo não definido')
+            return;
+        }
+
+        
+        // Salva no state:
+        setFormDataRegister((prev) => ({ ...prev, [id]: value }));
+    }
+
+    const handleChange = (e) => {
+        const newValue = e.target.value;
+
+        // Impede números em qualquer posição
+        if (/\d/.test(newValue)) return;
+
+        // Impede espaço no início ou múltiplos espaços consecutivos sem letras
+        if (
+        newValue.startsWith(' ') || // Espaço inicial
+        (newValue.includes('  ') && !/[a-zA-Z]/.test(newValue)) // Múltiplos espaços sem letras
+        ) {
+            return;
+        }
+
+        // Atualiza o estado apenas se passar em todas as validações
+        setFormDataRegister((prev)=> ({...prev, name: newValue}));
+    };
   
     return (
         <div className="Page Cadastro grid">
-            {/* COMPONENTE HEADER */}
-            <div>TOPO</div>
+            <Header />
 
             <main className='mainPage Cadastro'>
                 <div className="main_top">
-                    <h3>Subtitulo</h3>
+                    <p className="sub_title txt_emphasis">
+                        A primeira loja do mundo em que a moeda é material reciclável
+                    </p>
+
+                    <div className="cta">
+                        <span>{'>>'}</span>
+                        <p>
+                            Cadastra-se, converta <br />
+                            suas embalagens e troque seus créditos
+                            por produtos exclusivos da loja
+                        </p>
+                    </div>
                 </div>
-                {/* DIVISOR PONTILHADO */}
+
+                <div className="divider"></div>
 
                 <form className="main_form" autoComplete="off">
+                    <h2 className="txt_emphasis">Cadastro</h2>
+
+
                     <div className="input--label">
-                        <input type="text" id="name" />
+                        <input type="text"
+                        id="name" 
+                        className="input"
+                        placeholder="Nome Completo" 
+                        value={formDataRegister.name}
+                        onChange={handleChange}
+                        minLength={3}
+                        required
+                        />
+
                         <label htmlFor="name">Nome</label>
                     </div>
 
-                    <button className="btn primary">
-                        Continuar
-                    </button>
+                    <div className="input--label">
+                        <input type="email"
+                        inputMode="email"
+                        id="email" 
+                        className="input"
+                        placeholder="email@email.com" 
+                        value={formDataRegister.email}
+                        onChange={handleChangeForm}
+                        required
+                        />
+
+                        <label htmlFor="email">E-mail</label>
+                    </div>
+
+                    <div className="input--label">
+                        <InputCPF />
+
+                        <label htmlFor="">CPF</label>
+                    </div>
+
+
+                    <p className="alert_terms">
+                        Ao se cadastrar, você concorda <br />
+                        com os termos da nossa Política de Privacidade.
+                    </p>
+
+                    <div className="container_btn">
+                        <button className="btn primary">
+                            Continuar
+                        </button>
+                    </div>
                 </form>
 
                 {/* COMPONENTE TERMOS */}
             </main>
 
-            {/* <Footer/> */}
-            <footer>RODAPE</footer>
+            <Footer />
         </div>
     );
 }

@@ -9,14 +9,15 @@
 
 
 // Estilo:
-import './footer.css';
+import './header.css';
 
 
-export function Footer() {
+export function Header() {
+
 
     return (
-        <footer className="Footer">
-            <p>RODAPÉ</p>
-        </footer>
+        <header className="Header">
+            <h2>CABEÇALHO (LOGO)</h2>
+        </header>
     )        
 }

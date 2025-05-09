@@ -1,10 +1,10 @@
 {
-  "name": "WebApp MidiaBizsys",
-  "short_name": "App MidiaBiz",
+  "name": "WebApp BotiRecicla",
+  "short_name": "BotiRecicla",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
   "icons": [
     {
       "src": "favicon.ico",
