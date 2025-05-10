@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 // Components:
 import { Header } from "../../components/Header/Header";
-import { InputCPF } from "../../components/InputCPF/InputCPF";
+import { InputName } from "../../components/Forms/InputName/InputName";
 import { Footer } from "../../components/Footer/Footer";
 
 // Assets:
@@ -23,7 +23,9 @@ import './style.css';
 
 
 export default function Cadastro() {
+    // Constantes do componente:
     const navigate = useNavigate();
+    
     // Estados do componente:
     const [loadingSubmit, setLoadingSubmit] = useState(false);
     const [validationErrors, setValidationErrors] = useState([]);
@@ -35,7 +37,7 @@ export default function Cadastro() {
         cpf: ''
     });
     
-    const [showTerms, setShowTerms] = useState(false);
+    // const [showTerms, setShowTerms] = useState(false);
 
 
 
@@ -48,41 +50,37 @@ export default function Cadastro() {
     }, []);
 
     
+    
 
 
     function handleChangeForm(e) {
         const { id, value } = e.target;
-        console.log(value)
-        console.log(value.length)
+        console.log(id, value)
         
+        // Checagem inicial:
         if(!id) {
-            console.warn('ID do input alvo não definido')
+            console.warn('ID do input alvo não foi definido')
+            return;
+        }
+
+        if(!Object.hasOwn(formDataRegister, id)) {
+            console.warn(`ID "${id}" do input alvo não é compátivel com o state de formulario`)
             return;
         }
 
         
-        // Salva no state:
+        // Atualiza state
         setFormDataRegister((prev) => ({ ...prev, [id]: value }));
     }
 
-    const handleChange = (e) => {
-        const newValue = e.target.value;
+    
+    // SUBMIT API:
+    async function handleSubmitRegisterAPI(e) {
+        e.preventDefault();
+        console.log('SUBMIT FORM')
+    }
 
-        // Impede números em qualquer posição
-        if (/\d/.test(newValue)) return;
 
-        // Impede espaço no início ou múltiplos espaços consecutivos sem letras
-        if (
-        newValue.startsWith(' ') || // Espaço inicial
-        (newValue.includes('  ') && !/[a-zA-Z]/.test(newValue)) // Múltiplos espaços sem letras
-        ) {
-            return;
-        }
-
-        // Atualiza o estado apenas se passar em todas as validações
-        setFormDataRegister((prev)=> ({...prev, name: newValue}));
-    };
-  
     return (
         <div className="Page Cadastro grid">
             <Header />
@@ -105,26 +103,24 @@ export default function Cadastro() {
 
                 <div className="divider"></div>
 
-                <form className="main_form" autoComplete="off">
+                <form className="main_form" onSubmit={handleSubmitRegisterAPI} autoComplete="off">
                     <h2 className="txt_emphasis">Cadastro</h2>
 
 
                     <div className="input--label">
-                        <input type="text"
+                        <InputName 
                         id="name" 
-                        className="input"
-                        placeholder="Nome Completo" 
-                        value={formDataRegister.name}
-                        onChange={handleChange}
-                        minLength={3}
-                        required
+                        value={formDataRegister.name} 
+                        setValue={handleChangeForm} 
+                        placeholder={'Nome Completo'}
                         />
 
                         <label htmlFor="name">Nome</label>
                     </div>
 
                     <div className="input--label">
-                        <input type="email"
+                        <input 
+                        type="email"
                         inputMode="email"
                         id="email" 
                         className="input"
@@ -137,8 +133,11 @@ export default function Cadastro() {
                         <label htmlFor="email">E-mail</label>
                     </div>
 
+
+
+
                     <div className="input--label">
-                        <InputCPF />
+                        {/* <InputCPF /> */}
 
                         <label htmlFor="">CPF</label>
                     </div>
