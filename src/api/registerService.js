@@ -6,24 +6,26 @@ import api from './config/axiosConfig';
 // import { APP_CONSTANTS } from './config/constants';
 
 
-const Login = async (email, password) => {
+const Register = async (bodyReq) => {
     console.log('CALL FUNCTION API');
 
-    const bodyReq = {
-        email: email,
-        password: password
-    }
-    const response = await api.post('/login', bodyReq);
+    // const bodyReq = {
+    //     name: name,
+    //     email: email,
+    //     cpf: cpf
+    // }
+    console.log(bodyReq)
+    const response = await api.post('/register', bodyReq);
 
     // console.log(response.data);
     return response.data;
 };
 
 
-const AuthService = {
+const RegisterService = {
 
     // Metodos
-    Login,
+    Register,
 };
 
-export default AuthService;
+export default RegisterService;

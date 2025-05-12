@@ -21,7 +21,7 @@ import './style.css';
 
 
 
-export default function Instrucoes() {
+export default function ConfirmaPesagem() {
     const navigate = useNavigate();
     // Estados do componente:
     const [loadingSubmit, setLoadingSubmit] = useState(false);
@@ -33,7 +33,7 @@ export default function Instrucoes() {
 
     useEffect(()=> {
         function initializePage() {
-            console.log('Effect /Instrucoes');
+            console.log('Effect /ConfirmaPesagem');
         } 
         initializePage();
     }, []);
@@ -43,12 +43,10 @@ export default function Instrucoes() {
 
   
     return (
-        <div className="Page Instrucoes grid">
+        <div className="Page ConfirmaPesagem grid">
             <Header />
 
-            <main className='mainPage Instrucoes'>
-                <h2 className="txt_emphasis">Como funciona</h2>    
-
+            <main className='mainPage ConfirmaPesagem'>
                 <ul className="instructions">
                     <li className="item">
                         <span>{'>>'}</span>
@@ -62,27 +60,15 @@ export default function Instrucoes() {
                             Step 2
                         </p>
                     </li>
-                    <li className="item">
-                        <span>{'>>'}</span>
-                        <p>
-                            Step 3
-                        </p>
-                    </li>
-                    <li className="item">
-                        <span>{'>>'}</span>
-                        <p>
-                            Step 4
-                        </p>
-                    </li>
                 </ul>
 
 
                 <div className="container_btn">
                     <button className="btn primary" disabled={loadingSubmit}>
                         {loadingSubmit ? (
-                            <span>Iniciando...</span>
+                            <span>Convertendo...</span>
                         ) : (
-                            <span>Iniciar</span>
+                            <span>Converter</span>
                         )}
                     </button>
                 </div>

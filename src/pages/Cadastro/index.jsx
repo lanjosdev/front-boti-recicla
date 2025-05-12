@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom";
 // CONSTANTES:
 import { APP_CONSTANTS } from "../../config/appConstants";
 
+// API:
+import RegisterService from "../../api/registerService";
+
 // Contexts:
 // import UserContext from "../../contexts/userContext";
 
@@ -77,7 +80,7 @@ export default function Cadastro() {
 
     function handleChangeForm(e) {
         const { id, value } = e.target;
-        console.log(id, value)
+        // console.log(id, value)
         
         // Checagem inicial:
         if(!id) {
@@ -120,11 +123,14 @@ export default function Cadastro() {
 
         // REQUEST:
         try {
-            const response = {success: 'FUNCTION API REGISTER', data: 'SEILA'};
+            const bodyReq = {...formDataRegister};
+            bodyReq.cpf = bodyReq.cpf.replace(/\D/g, '');
+
+            const response = await RegisterService.Register(bodyReq);
             console.log(response);
             
             if(response.success) {
-                const token = response.data;
+                const token = response.data.token;
                 Cookies.set(APP_CONSTANTS.COOKIE_AUTH_TOKEN_NAME, token, { 
                     secure: true,
                     sameSite: 'Strict'
@@ -134,6 +140,10 @@ export default function Cadastro() {
                 navigate('/instrucoes');
             }
             else if(response.success == false) {
+                if(response.message == "CPF já registrado. Por favor, verifique.") {
+                    setValidationErrors(prev => ({...prev, cpf: ['CPF já cadastrado']}));
+                }
+
                 console.warn(response.message);
                 toast.warn(response.message);
             }
@@ -240,7 +250,8 @@ export default function Cadastro() {
                     </p>
 
                     <div className="container_btn">
-                        <button className="btn primary" disabled={validationErrors.cpf.length > 0 || loadingSubmit}>
+                        {/* <button className="btn primary" disabled={validationErrors.cpf.length > 0 || loadingSubmit}> */}
+                        <button className="btn primary" disabled={loadingSubmit}>
                             {loadingSubmit ? (
                                 <span>Cadastrando...</span>
                             ) : (
