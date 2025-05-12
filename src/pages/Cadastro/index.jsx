@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 // Components:
 import { Header } from "../../components/Header/Header";
 import { InputName } from "../../components/Forms/InputName/InputName";
+import { InputCPF } from "../../components/Forms/InputCPF/InputCPF";
 import { Footer } from "../../components/Footer/Footer";
 
 // Assets:
@@ -19,6 +20,7 @@ import { Footer } from "../../components/Footer/Footer";
 
 // Estilo:
 import './style.css';
+import { toast } from "react-toastify";
 
 
 
@@ -77,7 +79,7 @@ export default function Cadastro() {
     // SUBMIT API:
     async function handleSubmitRegisterAPI(e) {
         e.preventDefault();
-        console.log('SUBMIT FORM')
+        toast.info('SUBMIT FORM');
     }
 
 
@@ -112,7 +114,7 @@ export default function Cadastro() {
                         id="name" 
                         value={formDataRegister.name} 
                         setValue={handleChangeForm} 
-                        placeholder={'Nome Completo'}
+                        placeholder='Nome Completo'
                         />
 
                         <label htmlFor="name">Nome</label>
@@ -133,11 +135,13 @@ export default function Cadastro() {
                         <label htmlFor="email">E-mail</label>
                     </div>
 
-
-
-
                     <div className="input--label">
-                        {/* <InputCPF /> */}
+                        <InputCPF 
+                        id="cpf"
+                        value={formDataRegister.cpf}
+                        setValue={handleChangeForm}
+                        placeholder='000.000.000-00'
+                        />
 
                         <label htmlFor="">CPF</label>
                     </div>

@@ -223,6 +223,11 @@
             background-color: #fff;
             transform: scale(1.02);
         }
+
+
+        &.error {
+            border: 0.2rem solid var(--color-danger);
+        }
     }
 
     textarea {
