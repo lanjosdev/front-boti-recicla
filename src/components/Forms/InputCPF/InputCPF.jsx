@@ -1,5 +1,5 @@
 // Hooks / Libs:
-import { useState } from 'react';
+// import { useState } from 'react';
 
 // Utils:
 //import { formatarHora } from '../../../utils/formatarNumbers';
@@ -11,8 +11,8 @@ import { useState } from 'react';
 
 
 
-export function InputCPF({ id, value, setValue, placeholder, maxLength=14, required=true }) {
-    const [isValid, setIsValid] = useState(true);
+export function InputCPF({ id, value, setValue, placeholder, maxLength=14, required=true, validationErrors, setValidationErrors }) {
+    // const [isValid, setIsValid] = useState(true);
     // const [message, setMessage] = useState('');
 
     
@@ -40,7 +40,8 @@ export function InputCPF({ id, value, setValue, placeholder, maxLength=14, requi
 
     // Valida o CPF
     const validateCPF = (cpf) => {
-        setIsValid(true);
+        // setIsValid(true);
+        setValidationErrors(prev => ({...prev, cpf: []}));
 
         // Remove caracteres não numéricos para validação
         const numericCPF = cpf.replace(/\D/g, '');
@@ -54,7 +55,8 @@ export function InputCPF({ id, value, setValue, placeholder, maxLength=14, requi
         
         // Verifica se todos os dígitos são iguais (CPF inválido, mas com formato correto)
         if(/^(\d)\1+$/.test(numericCPF)) {
-            setIsValid(false);
+            // setIsValid(false);
+            setValidationErrors(prev => ({...prev, cpf: ['CPF inválido']}));
             // setMessage('CPF inválido');
             return false;
         }
@@ -67,7 +69,8 @@ export function InputCPF({ id, value, setValue, placeholder, maxLength=14, requi
         let rest = 11 - (sum % 11);
         if(rest === 10 || rest === 11) rest = 0;
         if(rest !== parseInt(numericCPF.charAt(9))) {
-            setIsValid(false);
+            // setIsValid(false);
+            setValidationErrors(prev => ({...prev, cpf: ['CPF inválido']}));
             // setMessage('CPF inválido');
             return false;
         }
@@ -80,7 +83,8 @@ export function InputCPF({ id, value, setValue, placeholder, maxLength=14, requi
         rest = 11 - (sum % 11);
         if(rest === 10 || rest === 11) rest = 0;
         if(rest !== parseInt(numericCPF.charAt(10))) {
-            setIsValid(false);
+            // setIsValid(false);
+            setValidationErrors(prev => ({...prev, cpf: ['CPF inválido']}));
             // setMessage('CPF inválido');
             return false;
         }
@@ -110,7 +114,7 @@ export function InputCPF({ id, value, setValue, placeholder, maxLength=14, requi
             type="text"
             inputMode='numeric'
             id={id}
-            className={`input ${!isValid ? 'error' : ''}`}
+            className={`input ${validationErrors.cpf.length > 0 ? 'error' : ''}`}
             value={formatCPF(value)}
             onChange={handleChangeCPF}
             placeholder={placeholder}

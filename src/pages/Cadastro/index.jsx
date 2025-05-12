@@ -4,23 +4,24 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 // CONSTANTES:
-// import { APP_CONSTANTS } from "../../api/config/constants";
+import { APP_CONSTANTS } from "../../config/appConstants";
 
 // Contexts:
 // import UserContext from "../../contexts/userContext";
 
 // Components:
+import { toast } from "react-toastify";
 import { Header } from "../../components/Header/Header";
 import { InputName } from "../../components/Forms/InputName/InputName";
 import { InputCPF } from "../../components/Forms/InputCPF/InputCPF";
 import { Footer } from "../../components/Footer/Footer";
+import { Terms } from "../../components/Terms/Terms";
 
 // Assets:
 // import imgLogo from '../../assets/images/LOGO-BIZSYS_preto.png';
 
 // Estilo:
 import './style.css';
-import { toast } from "react-toastify";
 
 
 
@@ -30,7 +31,12 @@ export default function Cadastro() {
     
     // Estados do componente:
     const [loadingSubmit, setLoadingSubmit] = useState(false);
-    const [validationErrors, setValidationErrors] = useState([]);
+    const [validationErrors, setValidationErrors] = useState({
+        name: [],
+        email: [],
+        cpf: []
+    });
+    const [errorsRender, setErrorsRender] = useState([]);
 
     // Logica UI + Dados a submiter:
     const [formDataRegister, setFormDataRegister] = useState({
@@ -38,8 +44,8 @@ export default function Cadastro() {
         email: '',
         cpf: ''
     });
-    
-    // const [showTerms, setShowTerms] = useState(false);
+
+    const [showTerms, setShowTerms] = useState(false);
 
 
 
@@ -50,6 +56,20 @@ export default function Cadastro() {
         } 
         initializePage();
     }, []);
+
+    useEffect(()=> {
+        function structuringErrorsRender() {
+            let errors = [];
+
+            for(let key in validationErrors) {
+                errors.push(...validationErrors[key]);
+            }
+
+            // console.log(errors)
+            setErrorsRender(errors);
+        } 
+        structuringErrorsRender();
+    }, [validationErrors]);
 
     
     
@@ -75,12 +95,64 @@ export default function Cadastro() {
         setFormDataRegister((prev) => ({ ...prev, [id]: value }));
     }
 
+    function handleShowTerms() {
+        if(!loadingSubmit) {
+            setShowTerms(true);
+        }
+    }
+
     
     // SUBMIT API:
     async function handleSubmitRegisterAPI(e) {
         e.preventDefault();
-        toast.info('SUBMIT FORM');
+        setLoadingSubmit(true);
+        // const startTime = performance.now();
+
+
+        // VALIDAÇÕES:
+        if(formDataRegister.cpf.length < 14) {
+            setValidationErrors(prev => ({...prev, cpf: ['CPF incompleto']}));
+            toast.warn('Preencha o formulário corretamente');
+            setLoadingSubmit(false);
+            return;
+        }
+
+
+        // REQUEST:
+        try {
+            const response = {success: 'FUNCTION API REGISTER', data: 'SEILA'};
+            console.log(response);
+            
+            if(response.success) {
+                const token = response.data;
+                Cookies.set(APP_CONSTANTS.COOKIE_AUTH_TOKEN_NAME, token, { 
+                    secure: true,
+                    sameSite: 'Strict'
+                });
+                toast.success('Cadastro realizado com sucesso.');
+
+                navigate('/instrucoes');
+            }
+            else if(response.success == false) {
+                console.warn(response.message);
+                toast.warn(response.message);
+            }
+            else {
+                toast.error('Erro inesperado.');
+            }
+        }
+        catch(error) {
+            console.error('DETALHES DO ERRO:', error);
+            setValidationErrors(['Houve um erro.']); 
+        }
+
+        
+        // const endTime = performance.now();
+        // const seconds = ((endTime - startTime) / 1000).toFixed(2);
+        setLoadingSubmit(false);
     }
+    
+    
 
 
     return (
@@ -141,25 +213,48 @@ export default function Cadastro() {
                         value={formDataRegister.cpf}
                         setValue={handleChangeForm}
                         placeholder='000.000.000-00'
+                        validationErrors={validationErrors}
+                        setValidationErrors={setValidationErrors}
                         />
 
                         <label htmlFor="">CPF</label>
                     </div>
 
 
+                    {/* Mensagens de validação */}
+                    {errorsRender.length > 0 && (
+                    <div className="msg_feedback error">
+                        {errorsRender.map((item, idx)=> (
+                            <p className="item" key={idx}>
+                                <i className="bi bi-exclamation-circle"></i>
+                                <span> {item}</span>
+                            </p>
+                        ))}
+                    </div>
+                    )}
+                    
+
                     <p className="alert_terms">
                         Ao se cadastrar, você concorda <br />
-                        com os termos da nossa Política de Privacidade.
+                        com os termos da nossa <span className="call_terms" onClick={handleShowTerms}>Política de Privacidade</span>.
                     </p>
 
                     <div className="container_btn">
-                        <button className="btn primary">
-                            Continuar
+                        <button className="btn primary" disabled={validationErrors.cpf.length > 0 || loadingSubmit}>
+                            {loadingSubmit ? (
+                                <span>Cadastrando...</span>
+                            ) : (
+                                <span>Continuar</span>
+                            )}
                         </button>
                     </div>
                 </form>
 
-                {/* COMPONENTE TERMOS */}
+
+                {/* Termos */}
+                {showTerms && (
+                    <Terms close={()=> setShowTerms(false)} />
+                )}
             </main>
 
             <Footer />

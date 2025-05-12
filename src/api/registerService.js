@@ -19,30 +19,11 @@ const Login = async (email, password) => {
     return response.data;
 };
 
-const Logout = async () => {
-    console.log('CALL FUNCTION API');
-
-    const response = await api.post('/logout');
-
-    // console.log(response.data);
-    return response.data;
-};
-
-const GetCurrentUser = async () => {
-    console.log('CALL FUNCTION API');
-
-    const response = await api.get('/profile');
-
-    // console.log(response.data);
-    return response.data;
-};
 
 const AuthService = {
 
     // Metodos
     Login,
-    Logout,
-    GetCurrentUser
 };
 
 export default AuthService;
