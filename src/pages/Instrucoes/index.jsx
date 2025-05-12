@@ -4,12 +4,16 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 // CONSTANTES:
-// import { APP_CONSTANTS } from "../../api/config/constants";
+import { APP_CONSTANTS } from "../../config/appConstants";
+
+// API:
+import WeighingService from "../../api/weighingService";
 
 // Contexts:
 // import UserContext from "../../contexts/userContext";
 
 // Components:
+import { toast } from "react-toastify";
 import { Header } from "../../components/Header/Header";
 import { Footer } from "../../components/Footer/Footer";
 
@@ -40,6 +44,60 @@ export default function Instrucoes() {
 
     
 
+    // SUBMIT API:
+    async function handleSubmitStart() {
+        setLoadingSubmit(true);
+        // const startTime = performance.now();
+
+
+        // VALIDAÇÕES:
+        const idUser = Cookies.get(APP_CONSTANTS.COOKIE_ID_USER_NAME);
+        if(!idUser) {
+            console.warn('SEM ID_USER');
+            setLoadingSubmit(false);
+            return;
+        }
+
+
+        // REQUEST:
+        try {
+            const response = await WeighingService.Start(idUser);
+            console.log(response);
+            
+            if(response.success) {
+                const idParticipation = response.data.id_participation;
+                Cookies.set(APP_CONSTANTS.COOKIE_ID_PARTICIPATION_NAME, idParticipation, { 
+                    secure: true,
+                    sameSite: 'Strict'
+                });
+                toast.success('Pesagem liberada');
+
+                navigate('/confirma-pesagem');
+            }
+            else if(response.success == false) {
+                // if(response.message == "Participação em andamento.") {
+                //     console.log(response.data.idParticipation)
+                // }
+                // if(response.message == "Nenhum resultado encontrado para o id informado. Por favor, verifique.") {
+                //     console.warn('IdUSer não está na base.')
+                // }
+
+                console.warn(response.message);
+                toast.warn(response.message);
+            }
+            else {
+                toast.error('Erro inesperado.');
+            }
+        }
+        catch(error) {
+            console.error('DETALHES DO ERRO:', error);
+        }
+
+        
+        // const endTime = performance.now();
+        // const seconds = ((endTime - startTime) / 1000).toFixed(2);
+        setLoadingSubmit(false);
+    }
 
   
     return (
@@ -78,7 +136,7 @@ export default function Instrucoes() {
 
 
                 <div className="container_btn">
-                    <button className="btn primary" disabled={loadingSubmit}>
+                    <button className="btn primary" onClick={handleSubmitStart} disabled={loadingSubmit}>
                         {loadingSubmit ? (
                             <span>Iniciando...</span>
                         ) : (

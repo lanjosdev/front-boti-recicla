@@ -131,10 +131,16 @@ export default function Cadastro() {
             
             if(response.success) {
                 const token = response.data.token;
+                const idUser = response.data.id_user_register;
                 Cookies.set(APP_CONSTANTS.COOKIE_AUTH_TOKEN_NAME, token, { 
                     secure: true,
                     sameSite: 'Strict'
                 });
+                Cookies.set(APP_CONSTANTS.COOKIE_ID_USER_NAME, idUser, { 
+                    secure: true,
+                    sameSite: 'Strict'
+                });
+
                 toast.success('Cadastro realizado com sucesso.');
 
                 navigate('/instrucoes');
