@@ -146,15 +146,37 @@ export default function Cadastro() {
                 navigate('/instrucoes');
             }
             else if(response.success == false) {
+                console.warn('Success False:', response.message);
+
+                switch(response.message) {
+                    // {
+                    //     "success": false,
+                    //     "message": "A pesagem desse usuário já foi finalizada."
+                    // }
+
+                    // {
+                    //     "success": false,
+                    //     "message": "Usuário informado não tem nenhuma pesagem para finalizar."
+                    // }
+
+                    // {
+                    //     "success": false,
+                    //     "message": "Nenhum resultado encontrado para o id informado. Por favor, verifique."
+                    // }
+
+                    case 'error':
+                        toast.error('Ops, houve um erro');
+                        break;
+                    default:
+                        toast.warn(response.message);
+                }
+
                 if(response.message == "CPF já registrado. Por favor, verifique.") {
                     setValidationErrors(prev => ({...prev, cpf: ['CPF já cadastrado']}));
                 }
-
-                console.warn(response.message);
-                toast.warn(response.message);
             }
             else {
-                toast.error('Erro inesperado.');
+                toast.error('Erro inesperado');
             }
         }
         catch(error) {
@@ -272,6 +294,8 @@ export default function Cadastro() {
                 {showTerms && (
                     <Terms close={()=> setShowTerms(false)} />
                 )}
+
+                {/* Componente Mensagem "Já participou" */}
             </main>
 
             <Footer />

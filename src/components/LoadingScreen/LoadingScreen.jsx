@@ -20,14 +20,14 @@ import './loadingscreen.css';
 //     textFeedback: PropTypes.string,
 //     heightStretch: PropTypes.bool
 // }
-export function LoadingScreen({ textFeedback, heightStretch }) {    
+export function LoadingScreen({ textFeedback }) {    
 
 
 
     return (
         <div className="LoadingScreen animate__animated animate__fadeIn">
 
-            <LoaderFeedback textFeedback={textFeedback} heightStretch={heightStretch} />
+            <LoaderFeedback textFeedback={textFeedback} />
 
         </div>
     )        

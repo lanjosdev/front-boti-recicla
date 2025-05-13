@@ -75,22 +75,33 @@ export default function Instrucoes() {
                 navigate('/confirma-pesagem');
             }
             else if(response.success == false) {
-                // if(response.message == "Participação em andamento.") {
-                //     console.log(response.data.idParticipation)
-                // }
-                // if(response.message == "Nenhum resultado encontrado para o id informado. Por favor, verifique.") {
-                //     console.warn('IdUSer não está na base.')
-                // }
+                console.warn('Success False:', response.message);
 
-                console.warn(response.message);
-                toast.warn(response.message);
+                switch(response.message) {
+                    // {
+                    //     "success": false,
+                    //     "message": "Participação em andamento."
+                    // }
+                    
+                    // {
+                    //     "success": false,
+                    //     "message": "Nenhum resultado encontrado para o id informado. Por favor, verifique."
+                    // }
+                
+                    case 'error':
+                        toast.error('Ops, houve um erro');
+                        break;
+                    default:
+                        toast.warn(response.message);
+                }
             }
             else {
-                toast.error('Erro inesperado.');
+                toast.error('Erro inesperado');
             }
         }
         catch(error) {
             console.error('DETALHES DO ERRO:', error);
+            toast.error('Ops, houve um erro');
         }
 
         

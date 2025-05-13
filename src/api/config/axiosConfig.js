@@ -33,18 +33,16 @@ api.interceptors.request.use(
   }
 );
 
-// // Interceptor de resposta para lidar com erros globais
-// api.interceptors.response.use(
-//   (response) => response, 
-//   (error) => {
-//     if(error.response?.status === 401) {
-//       // Exemplo: redirecionar para login se token expirou
-//       Cookies.remove(APP_CONSTANTS.COOKIE_AUTH_TOKEN_NAME);
-//       window.location.href = '/';
-//     }
-//     // console.error(error);
-//     return Promise.reject(error);
-//   }
-// );
+// Interceptor de resposta para lidar com erros globais
+api.interceptors.response.use(
+  (response) => response, 
+  (error) => {
+    if(error.response?.status === 401) {
+      console.warn('REMOVER TODOS OS COOKIES???')
+    }
+    // console.error(error);
+    return Promise.reject(error);
+  }
+);
 
 export default api;
