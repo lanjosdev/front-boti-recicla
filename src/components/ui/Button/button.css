@@ -1,0 +1,108 @@
+.Button {
+    /* Variáveis locais específicas do componente */
+    --size-square: 0.6rem;
+
+    position: relative;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+
+    border: 0.1rem solid var(--color-text);
+    width: 100%;
+    max-width: fit-content;
+    height: auto;
+    /* min-height: 4.2rem; */
+    padding: 1rem 2rem;    
+
+    font-size: 2.2rem;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 0.1rem;
+
+    transition: all .3s ease-in-out;
+
+
+    .children {
+        transform: translateY(-7%);
+    }
+
+    .squares {
+        position: absolute;
+        /* background-color: rgba(255, 255, 0, 0.384); */
+        width: 100%;
+        height: fit-content;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &::before {
+            box-sizing: border-box;
+            content: '';
+            width: var(--size-square);
+            height: var(--size-square);
+            background-color: var(--color-w);
+            border: 0.1rem solid var(--color-text);
+
+            transform: translateX(-50%);
+        }
+        &::after {
+            box-sizing: border-box;
+            content: '';
+            width: var(--size-square);
+            height: var(--size-square);
+            background-color: var(--color-w);
+            border: 0.1rem solid var(--color-text);
+
+            transform: translateX(50%);
+        }
+
+        .square {
+            width: var(--size-square);
+            height: var(--size-square);
+            background-color: var(--color-w);
+            border: 0.1rem solid var(--color-text);
+        }
+
+
+        &.top {
+            top: 0;
+            transform: translateY(-50%);
+        }
+        &.bottom {
+            bottom: 0;
+            transform: translateY(50%);
+        }
+    }
+
+    > .square {
+        position: absolute;
+
+        width: var(--size-square);
+        height: var(--size-square);
+        background-color: var(--color-w);
+        border: 0.1rem solid var(--color-text);
+
+        &.right {
+            right: 0;
+            transform: translateX(50%);
+        }
+        &.left {
+            left: 0;
+            transform: translateX(-50%);
+        }
+    }
+
+
+
+    &:hover {
+        background-color: #004d4344;
+    }
+    &:active {
+        transform: scale(0.9);
+        background-color: var(--color-text);
+        color: var(--color-w);
+    }
+}

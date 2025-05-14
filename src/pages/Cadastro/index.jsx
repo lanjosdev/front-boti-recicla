@@ -14,11 +14,13 @@ import RegisterService from "../../api/registerService";
 
 // Components:
 import { toast } from "react-toastify";
-import { Header } from "../../components/Header/Header";
+import { Header } from "../../components/layout/Header/Header";
 import { InputName } from "../../components/Forms/InputName/InputName";
 import { InputCPF } from "../../components/Forms/InputCPF/InputCPF";
-import { Footer } from "../../components/Footer/Footer";
-import { Terms } from "../../components/Terms/Terms";
+import { Button } from "../../components/ui/Button/Button";
+import { Footer } from "../../components/layout/Footer/Footer";
+import { Terms } from "../../components/ui/Terms/Terms";
+import { Participated } from "../../components/ui/Participated/Participated";
 
 // Assets:
 // import imgLogo from '../../assets/images/LOGO-BIZSYS_preto.png';
@@ -49,6 +51,7 @@ export default function Cadastro() {
     });
 
     const [showTerms, setShowTerms] = useState(false);
+    const [showParticipated, setShowParticipated] = useState(false);
 
 
 
@@ -164,6 +167,10 @@ export default function Cadastro() {
                     //     "message": "Nenhum resultado encontrado para o id informado. Por favor, verifique."
                     // }
 
+                    case 'CPF já registrado. Por favor, verifique.':
+                        setShowParticipated(true);
+                        setValidationErrors(prev => ({...prev, cpf: ['CPF já cadastrado']}));
+                        break;
                     case 'error':
                         toast.error('Ops, houve um erro');
                         break;
@@ -171,9 +178,9 @@ export default function Cadastro() {
                         toast.warn(response.message);
                 }
 
-                if(response.message == "CPF já registrado. Por favor, verifique.") {
-                    setValidationErrors(prev => ({...prev, cpf: ['CPF já cadastrado']}));
-                }
+                // if(response.message == "CPF já registrado. Por favor, verifique.") {
+                //     setValidationErrors(prev => ({...prev, cpf: ['CPF já cadastrado']}));
+                // }
             }
             else {
                 toast.error('Erro inesperado');
@@ -274,18 +281,18 @@ export default function Cadastro() {
 
                     <p className="alert_terms">
                         Ao se cadastrar, você concorda <br />
-                        com os termos da nossa <span className="call_terms" onClick={handleShowTerms}>Política de Privacidade</span>.
+                        com os termos da nossa <span className="call_terms txt_link" onClick={handleShowTerms}>Política de Privacidade</span>.
                     </p>
 
                     <div className="container_btn">
                         {/* <button className="btn primary" disabled={validationErrors.cpf.length > 0 || loadingSubmit}> */}
-                        <button className="btn primary" disabled={loadingSubmit}>
+                        <Button disabled={loadingSubmit}>
                             {loadingSubmit ? (
                                 <span>Cadastrando...</span>
                             ) : (
                                 <span>Continuar</span>
                             )}
-                        </button>
+                        </Button>
                     </div>
                 </form>
 
@@ -295,7 +302,10 @@ export default function Cadastro() {
                     <Terms close={()=> setShowTerms(false)} />
                 )}
 
-                {/* Componente Mensagem "Já participou" */}
+                {/* Já participou */}
+                {showParticipated && (
+                    <Participated close={()=> setShowParticipated(false)} />
+                )}
             </main>
 
             <Footer />

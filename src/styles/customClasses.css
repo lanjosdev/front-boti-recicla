@@ -29,42 +29,9 @@
     }
 }
 
-.link_animate {
-    position: relative;
-    /* border: 1px solid red; */
-    max-width: fit-content;
-
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-
-    color: var(--color-primary);
-    font-weight: 600;
-
-    transition: all .3s ease;
-
-    > i {
-        font-size: 1.8rem;
-    }
-
-    &::after {
-        content: '';
-        position: absolute;
-        background-color: var(--color-primary);
-        width: 0;
-        height: 0.18rem;
-        left: 0;
-        bottom: 0;
-
-        transition: all .3s ease-in-out;
-    }
-
-    &:hover {
-        transform: scale(1.02);
-    }
-    &:hover::after {
-        width: 100%;
-    }
+.txt_link {
+    /* color: blue; */
+    text-decoration: underline;
 }
 /* TIPOGRAFIA-FIM */
 
@@ -76,7 +43,6 @@
 .none {
     display: none;
 }
-
 
 .loader {
     min-width: 17px;
@@ -102,11 +68,9 @@
 
 
 
-
-
 /* ELEMENTOS */
 .container_btn {
-    /* margin-top: 1rem; */
+    margin-top: 1.5rem;
 
     display: flex;
     justify-content: center;
@@ -271,69 +235,7 @@
         /* color: var(--color-text); */
     }
 }
-
-
-
-/* component */
-.confirm_check {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    user-select: none;
-
-    input {
-        display: none;
-    }
-    .checkmark {
-        background-color: var(--color-w);
-        border: 0.1rem solid var(--color-bg-3);
-        min-width: 2rem;
-        height: 2rem;
-        border-radius: 5px;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        transition: all 0.3s ease;
-
-        i {
-            opacity: 0;
-            font-size: 1.8rem;
-        }
-    }
-    input:checked + .checkmark {
-        background-color: var(--color-primary);
-        border-color: var(--color-text);
-
-        color: var(--color-w);
-        i {
-            opacity: 1;
-        }
-    }
-
-    .text {
-        font-weight: 400;
-    }
-}
-
-.feedback_content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: .7rem;
-    
-    height: 12rem;
-
-    p {
-        font-weight: 600;
-    }
-}
-/* component */
 /* ELEMENTOS-FIM */
-
-
 
 
 

@@ -4,4 +4,5 @@ export const APP_CONSTANTS = {
     COOKIE_AUTH_TOKEN_NAME: import.meta.env.VITE_COOKIE_AUTH_TOKEN_NAME || 'authTokenBotiBiz',
     COOKIE_ID_USER_NAME: import.meta.env.VITE_COOKIE_ID_USER_NAME || 'idUserBotiBiz',
     COOKIE_ID_PARTICIPATION_NAME: import.meta.env.VITE_COOKIE_ID_PARTICIPATION_NAME || 'idParticipationBotiBiz',
+    COOKIE_RESULTS_NAME: import.meta.env.VITE_COOKIE_RESULTS_NAME || 'resultsBotiBiz',
 };

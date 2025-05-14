@@ -1,0 +1,15 @@
+.Participated {
+    background-color: #dcffe1ef;
+    -webkit-backdrop-filter: blur(1px);
+    backdrop-filter: blur(1px);
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

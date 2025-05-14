@@ -1,4 +1,4 @@
-// Funcionalidades / Libs:
+// Hooks / Libs:
 // import { useState, useEffect } from 'react';
 // import { Navigate } from 'react-router-dom';
 
@@ -18,7 +18,11 @@ export function Terms({ close }) {
     return (
         <div className="Terms animate__animated animate__bounceInUp">
             <div className="container_text">
-                <p>### Texto termos aqui ###</p>
+                <p>
+                    Termos e condições infinitas. Texto a ser enviado pelo cliente.
+                </p>
+
+                <p>...</p>
             </div>
 
             <button type='button' className='btn primary' onClick={close}>Ok</button>

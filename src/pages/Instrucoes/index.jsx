@@ -14,8 +14,8 @@ import WeighingService from "../../api/weighingService";
 
 // Components:
 import { toast } from "react-toastify";
-import { Header } from "../../components/Header/Header";
-import { Footer } from "../../components/Footer/Footer";
+import { Header } from "../../components/layout/Header/Header";
+import { Footer } from "../../components/layout/Footer/Footer";
 
 // Assets:
 // import imgLogo from '../../assets/images/LOGO-BIZSYS_preto.png';

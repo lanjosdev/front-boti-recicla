@@ -1,3 +1,4 @@
+/* Estilo base de page */
 .Page {
     border: 8px solid yellow;
     min-height: 100dvh;
@@ -15,6 +16,7 @@
         padding: 3rem var(--p-lateral);
     }
 }
+/* Estilo base de page */
 
 
 .Page > .mainPage.Cadastro {

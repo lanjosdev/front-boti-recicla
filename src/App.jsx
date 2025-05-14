@@ -13,9 +13,9 @@ import './config/appConfig';
 // Components:
 import AppRoutes from './routes/AppRoutes'; //Config de rotas
 
-// Estilo Global e StyleElements:
+// Estilo Global e Classes customizadas:
 import './styles/global.css';
-import './styles/elements.css';
+import './styles/customClasses.css';
 
 
 

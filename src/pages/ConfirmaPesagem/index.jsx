@@ -15,9 +15,9 @@ import ResultService from "../../api/resultService";
 
 // Components:
 import { toast } from "react-toastify";
-import { Header } from "../../components/Header/Header";
-import { Footer } from "../../components/Footer/Footer";
-import { LoadingScreen } from "../../components/LoadingScreen/LoadingScreen";
+import { Header } from "../../components/layout/Header/Header";
+import { Footer } from "../../components/layout/Footer/Footer";
+import { LoadingScreen } from "../../components/ui/LoadingScreen/LoadingScreen";
 
 // Assets:
 // import imgLogo from '../../assets/images/LOGO-BIZSYS_preto.png';
@@ -71,19 +71,19 @@ export default function ConfirmaPesagem() {
                         response.data.finished_interaction && 
                         response.data.credits && response.data.weight
                     ) {
-                        console.log('SALVA COOKIE + PARA INTERVAL + NAVIGATE')
-                        ///// ...
-                        // Cookies.set(APP_CONSTANTS.COOKIE_ID_USER_NAME, idUser, { 
-                        //     secure: true,
-                        //     sameSite: 'Strict'
-                        // });
-
+                        // console.log('SALVA COOKIE + PARA INTERVAL + NAVIGATE')
+                        const dataResults = {
+                            name: response.data.name || null,
+                            weight: response.data.weight || 0, 
+                            credits: response.data.credits || 0 
+                        };
+                        Cookies.set(APP_CONSTANTS.COOKIE_RESULTS_NAME, JSON.stringify(dataResults), { 
+                            secure: true,
+                            sameSite: 'Strict'
+                        });
                         clearIntervalGetResults(intervalId);
-
-                        // navigate();
-                    }
-                    else {
-                        console.warn('SEM DADOS')
+                        
+                        navigate('/resultados');
                     }
                 }
                 else if(response.success == false) {
@@ -114,6 +114,7 @@ export default function ConfirmaPesagem() {
                 else {
                     console.error('Erro inesperado');
                     clearIntervalGetResults(intervalId);
+                    toast.error('Erro inesperado');
                 }
             }
             catch(error) {
