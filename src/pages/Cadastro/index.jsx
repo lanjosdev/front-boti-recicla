@@ -22,6 +22,9 @@ import { Footer } from "../../components/layout/Footer/Footer";
 import { Terms } from "../../components/ui/Terms/Terms";
 import { Participated } from "../../components/ui/Participated/Participated";
 
+// Utils:
+import CookiesUtils from "../../utils/cookiesUtils";
+
 // Assets:
 // import imgLogo from '../../assets/images/LOGO-BIZSYS_preto.png';
 
@@ -134,18 +137,20 @@ export default function Cadastro() {
             
             if(response.success) {
                 const token = response.data.token;
-                const idUser = response.data.id_user_register;
                 Cookies.set(APP_CONSTANTS.COOKIE_AUTH_TOKEN_NAME, token, { 
                     secure: true,
                     sameSite: 'Strict'
                 });
+
+                const idUser = response.data.id_user_register;
                 Cookies.set(APP_CONSTANTS.COOKIE_ID_USER_NAME, idUser, { 
                     secure: true,
                     sameSite: 'Strict'
                 });
 
                 toast.success('Cadastro realizado com sucesso.');
-
+                CookiesUtils.RemoveParticipation();
+                
                 navigate('/instrucoes');
             }
             else if(response.success == false) {
@@ -154,17 +159,7 @@ export default function Cadastro() {
                 switch(response.message) {
                     // {
                     //     "success": false,
-                    //     "message": "A pesagem desse usuário já foi finalizada."
-                    // }
-
-                    // {
-                    //     "success": false,
-                    //     "message": "Usuário informado não tem nenhuma pesagem para finalizar."
-                    // }
-
-                    // {
-                    //     "success": false,
-                    //     "message": "Nenhum resultado encontrado para o id informado. Por favor, verifique."
+                    //     "message": "CPF já registrado. Por favor, verifique."
                     // }
 
                     case 'CPF já registrado. Por favor, verifique.':
@@ -238,6 +233,19 @@ export default function Cadastro() {
                     </div>
 
                     <div className="input--label">
+                        <InputCPF 
+                        id="cpf"
+                        value={formDataRegister.cpf}
+                        setValue={handleChangeForm}
+                        placeholder='000.000.000-00'
+                        validationErrors={validationErrors}
+                        setValidationErrors={setValidationErrors}
+                        />
+
+                        <label htmlFor="">CPF</label>
+                    </div>
+
+                    <div className="input--label">
                         <input 
                         type="email"
                         inputMode="email"
@@ -249,20 +257,7 @@ export default function Cadastro() {
                         required
                         />
 
-                        <label htmlFor="email">E-mail</label>
-                    </div>
-
-                    <div className="input--label">
-                        <InputCPF 
-                        id="cpf"
-                        value={formDataRegister.cpf}
-                        setValue={handleChangeForm}
-                        placeholder='000.000.000-00'
-                        validationErrors={validationErrors}
-                        setValidationErrors={setValidationErrors}
-                        />
-
-                        <label htmlFor="">CPF</label>
+                        <label htmlFor="email">EMAIL</label>
                     </div>
 
 

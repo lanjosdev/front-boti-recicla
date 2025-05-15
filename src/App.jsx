@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 // Configs App:
-import './config/appConfig';
+import './config/appGetConfig';
 
 // Contexts Providers:
 // import { UserProvider } from './contexts/userContext';

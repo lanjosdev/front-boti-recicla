@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 import { APP_CONSTANTS } from "./appConstants";
 
 
-// SCRIPTS:
+// SCRIPT:
 async function getConfigApp() {
     console.log('CALL FUNCTION GET CONFIG');
 

@@ -8,6 +8,7 @@ import { APP_CONSTANTS } from "../../config/appConstants";
 
 // API:
 import WeighingService from "../../api/weighingService";
+import ResultService from "../../api/resultService";
 
 // Contexts:
 // import UserContext from "../../contexts/userContext";
@@ -44,6 +45,56 @@ export default function Instrucoes() {
 
     
 
+    
+    async function getResultsAPI(idUser) {
+        console.log('getResultsAPI')
+        try {
+            const response = await ResultService.GetResults(idUser);
+            console.log(response);
+
+            if(response.success) {
+                if(response.data.finished_interaction) {
+                    
+                    const dataResults = {
+                        name: response.data.name || null,
+                        weight: response.data.weight, 
+                        credits: response.data.credits 
+                    };
+                    Cookies.set(APP_CONSTANTS.COOKIE_RESULTS_NAME, JSON.stringify(dataResults), { 
+                        secure: true,
+                        sameSite: 'Strict'
+                    });
+                    
+                    navigate('/resultados');
+                }
+            }
+            else if(response.success == false) {
+                console.warn('Success False:', response.message);
+
+                if(response.message == 'error') {
+                    toast.error('Ops, houve um erro');
+                    return;
+                }
+                toast.warn(response.message);
+            }
+            else {
+                console.error('Erro inesperado');
+                toast.error('Erro inesperado');
+            }
+        }
+        catch(error) {
+            console.error('DETALHES DO ERRO:', error);
+
+            if(error.response?.status === 401) {
+                toast.warn('Você não está autenticado');
+                setLoadingSubmit(false);
+                navigate('/');
+                return;
+            }
+            toast.error('Ops, houve um erro');
+        }
+    }
+
     // SUBMIT API:
     async function handleSubmitStart() {
         setLoadingSubmit(true);
@@ -51,17 +102,20 @@ export default function Instrucoes() {
 
 
         // VALIDAÇÕES:
-        const idUser = Cookies.get(APP_CONSTANTS.COOKIE_ID_USER_NAME);
-        if(!idUser) {
+        const idUserCookie = Cookies.get(APP_CONSTANTS.COOKIE_ID_USER_NAME);
+        if(!idUserCookie) {
             console.warn('SEM ID_USER');
             setLoadingSubmit(false);
+            toast.warn('Necessário realizar o cadastro');
+            navigate('/');
             return;
         }
 
 
+        const idParticipationCookie = Cookies.get(APP_CONSTANTS.COOKIE_ID_PARTICIPATION_NAME);
         // REQUEST:
         try {
-            const response = await WeighingService.Start(idUser);
+            const response = await WeighingService.Start(idUserCookie);
             console.log(response);
             
             if(response.success) {
@@ -88,6 +142,19 @@ export default function Instrucoes() {
                     //     "message": "Nenhum resultado encontrado para o id informado. Por favor, verifique."
                     // }
                 
+                    case 'Usuário já participou':
+                        await getResultsAPI(idUserCookie);
+        
+                        break;
+                    case 'Participação em andamento.':
+                        if(response.data.idParticipation == idParticipationCookie) {
+                            navigate('/confirma-pesagem');
+                        }
+                        else {
+                            toast.warn(response.message);
+                        }
+        
+                        break;
                     case 'error':
                         toast.error('Ops, houve um erro');
                         break;
@@ -101,6 +168,13 @@ export default function Instrucoes() {
         }
         catch(error) {
             console.error('DETALHES DO ERRO:', error);
+
+            if(error.response?.status === 401) {
+                toast.warn('Você não está autenticado');
+                setLoadingSubmit(false);
+                navigate('/');
+                return;
+            }
             toast.error('Ops, houve um erro');
         }
 

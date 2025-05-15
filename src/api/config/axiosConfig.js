@@ -6,6 +6,9 @@ import Cookies from 'js-cookie';
 import { API_CONSTANTS } from './apiConstants';
 import { APP_CONSTANTS } from '../../config/appConstants';
 
+// Utils:
+import CookiesUtils from '../../utils/cookiesUtils';
+
 
 // Instância base do Axios para reutilização global
 const api = axios.create({
@@ -38,7 +41,8 @@ api.interceptors.response.use(
   (response) => response, 
   (error) => {
     if(error.response?.status === 401) {
-      console.warn('REMOVER TODOS OS COOKIES???')
+      console.warn('REMOVE TODOS OS COOKIES');
+      CookiesUtils.RemoveAll();
     }
     // console.error(error);
     return Promise.reject(error);

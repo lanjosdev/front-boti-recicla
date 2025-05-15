@@ -43,13 +43,20 @@ export default function Resultados() {
             const resultsCookie = JSON.parse(Cookies.get(APP_CONSTANTS.COOKIE_RESULTS_NAME) || null);
             console.log(resultsCookie)
             if(resultsCookie) {
-                setDataResults(prev => ({...prev, ...resultsCookie}));
+                setDataResults(prev => ({
+                    ...prev, 
+                    ...resultsCookie, 
+                    carbon: resultsCookie.weight * 1.7
+                }));
+            }
+            else {
+                navigate('/instrucoes');
             }
 
             setLoading(false);
         } 
         initializePage();
-    }, []);
+    }, [navigate]);
 
     
 
@@ -58,27 +65,27 @@ export default function Resultados() {
     return (
         <div className="Page Resultados grid">
             <Header />
+            
+            {loading ? (
+                <LoadingScreen textFeedback='Carregando resultados...' />
+            ) : (
+                <main className='mainPage Resultados'>
+                    <h2>
+                        Obrigado, <br />
+                        {dataResults.name}
+                    </h2>    
+                    <br />
 
-            <main className='mainPage Resultados'>
-                <h2>
-                    Obrigado, <br />
-                    {dataResults.name}
-                </h2>    
-                <br />
-
-                {/* Componente div border */}
-                <div>
-                    <p>Peso: {dataResults.weight}</p>
-                    <p>Créditos: {dataResults.credits}</p>
-                    <p>Carbano: {dataResults.carbon}</p>
-                </div>
-            </main>
+                    {/* Componente div border */}
+                    <div>
+                        <p>Peso: {dataResults.weight}</p>
+                        <p>Créditos: {dataResults.credits}</p>
+                        <p>Carbano: {dataResults.carbon > 0 ? dataResults.carbon.toFixed(1) : dataResults.carbon}</p>
+                    </div>
+                </main>
+            )}
 
             <Footer />
-
-            {loading && (
-                <LoadingScreen textFeedback='Carregando resultado...' />
-            )}
         </div>
     );
 }

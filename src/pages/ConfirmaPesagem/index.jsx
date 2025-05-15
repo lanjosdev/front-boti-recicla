@@ -34,8 +34,6 @@ export default function ConfirmaPesagem() {
     const [loadingResults, setLoadingResults] = useState(false);
 
     // Logica UI:
-
-    const idUser = Cookies.get(APP_CONSTANTS.COOKIE_ID_USER_NAME);
     
 
 
@@ -43,14 +41,19 @@ export default function ConfirmaPesagem() {
     useEffect(()=> {
         function initializePage() {
             console.log('Effect /ConfirmaPesagem');
+
+            const idParticipationCookie = Cookies.get(APP_CONSTANTS.COOKIE_ID_PARTICIPATION_NAME);
+            if(!idParticipationCookie) {
+                navigate('/instrucoes');
+            }
         } 
         initializePage();
-    }, []);
+    }, [navigate]);
 
     
 
 
-    async function getResults() {
+    async function getResults(idUser) {
         setLoadingResults(true);
         console.log('function getResults')
 
@@ -67,15 +70,18 @@ export default function ConfirmaPesagem() {
                 console.log(response);
     
                 if(response.success) {
-                    if(
-                        response.data.finished_interaction && 
-                        response.data.credits && response.data.weight
-                    ) {
-                        // console.log('SALVA COOKIE + PARA INTERVAL + NAVIGATE')
+                    if(response.data.finished_interaction) {
+                        if(response.data.weight == null && response.data.credits == null) {
+                            console.warn('TIMEOUT');
+                            toast.warn('TIMEOUT');
+                            // ??? Remover cookies e ir pra tela inicial
+                            //=// return;
+                        }
+                        
                         const dataResults = {
                             name: response.data.name || null,
-                            weight: response.data.weight || 0, 
-                            credits: response.data.credits || 0 
+                            weight: response.data.weight, 
+                            credits: response.data.credits 
                         };
                         Cookies.set(APP_CONSTANTS.COOKIE_RESULTS_NAME, JSON.stringify(dataResults), { 
                             secure: true,
@@ -133,16 +139,19 @@ export default function ConfirmaPesagem() {
 
 
         // VALIDAÇÕES:
-        if(!idUser) {
+        const idUserCookie = Cookies.get(APP_CONSTANTS.COOKIE_ID_USER_NAME);
+        if(!idUserCookie) {
             console.warn('SEM ID_USER');
             setLoadingSubmit(false);
+            toast.warn('Necessário realizar o cadastro');
+            navigate('/');
             return;
         }
 
 
         // REQUEST:
         try {
-            const response = await WeighingService.Finish(idUser);
+            const response = await WeighingService.Finish(idUserCookie);
             console.log(response);
             
             if(response.success) {
@@ -150,7 +159,7 @@ export default function ConfirmaPesagem() {
                 //     "success": true,
                 //     "message": "Pesagem finalizada com sucesso."
                 // }
-                getResults();
+                getResults(idUserCookie);
             }
             else if(response.success == false) {
                 console.warn('Success False Message:', response.message);
@@ -172,7 +181,7 @@ export default function ConfirmaPesagem() {
                     // }
 
                     case 'A pesagem desse usuário já foi finalizada.':
-                        getResults();
+                        getResults(idUserCookie);
                         break;
                     case 'error':
                         toast.error('Ops, houve um erro');
@@ -187,6 +196,13 @@ export default function ConfirmaPesagem() {
         }
         catch(error) {
             console.error('DETALHES DO ERRO:', error);
+            
+            if(error.response?.status === 401) {
+                toast.warn('Sessão expirada');
+                setLoadingSubmit(false);
+                navigate('/');
+                return;
+            }
             toast.error('Ops, houve um erro');
         }
 
