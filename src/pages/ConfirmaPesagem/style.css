@@ -1,5 +1,21 @@
 .Page > .mainPage.ConfirmaPesagem {
-    border: 5px solid aqua;
-
+    /* border: 5px solid aqua; */
     
+    .container_btn {
+        margin-top: 2.5rem;
+    }
+
+    .bg_img {
+        padding-right: 1rem;
+        padding-left: 1rem;
+
+        p {
+            font-size: 1rem;
+            display: flex;
+            justify-content: flex-end;
+            gap: 50%;
+
+            margin-bottom: 5rem;
+        }
+    }
 }

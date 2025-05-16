@@ -17,10 +17,12 @@ import ResultService from "../../api/resultService";
 import { toast } from "react-toastify";
 import { Header } from "../../components/layout/Header/Header";
 import { Footer } from "../../components/layout/Footer/Footer";
+import { Button } from "../../components/ui/Button/Button";
 import { LoadingScreen } from "../../components/ui/LoadingScreen/LoadingScreen";
 
 // Assets:
-// import imgLogo from '../../assets/images/LOGO-BIZSYS_preto.png';
+import iconSeta from '../../assets/icons/sinal.png';
+import imgBg from '../../assets/images/elementos-Totem.png'
 
 // Estilo:
 import './style.css';
@@ -234,31 +236,40 @@ export default function ConfirmaPesagem() {
         <div className="Page ConfirmaPesagem grid">
             <Header />
 
-            <main className='mainPage ConfirmaPesagem'>
+            <main className='mainPage ConfirmaPesagem Instrucoes'>
                 <ul className="instructions">
                     <li className="item">
-                        <span>{'>>'}</span>
+                        <img className="icon" src={iconSeta} alt="" />
                         <p>
-                            Step 1
+                            Agora deposite suas embalagens <br />
+                            na máquina.
                         </p>
                     </li>
                     <li className="item">
-                        <span>{'>>'}</span>
+                        <img className="icon" src={iconSeta} alt="" />
                         <p>
-                            Step 2
+                            Quando terminar, toque em Converter.
                         </p>
                     </li>
                 </ul>
 
 
                 <div className="container_btn">
-                    <button className="btn primary" onClick={handleSubmitFinish} disabled={loadingSubmit}>
+                    <Button onClick={handleSubmitFinish} disabled={loadingSubmit}>
                         {loadingSubmit ? (
                             <span>Convertendo...</span>
                         ) : (
                             <span>Converter</span>
                         )}
-                    </button>
+                    </Button>
+                </div>
+                
+                <div className="bg_img">
+                    <p>
+                        <span>20</span>
+                        <span>25</span>
+                    </p>
+                    <img src={imgBg} alt="" />
                 </div>
             </main>
 
