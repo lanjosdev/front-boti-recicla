@@ -17,9 +17,11 @@ import ResultService from "../../api/resultService";
 import { toast } from "react-toastify";
 import { Header } from "../../components/layout/Header/Header";
 import { Footer } from "../../components/layout/Footer/Footer";
+import { Button } from "../../components/ui/Button/Button";
 
 // Assets:
-// import imgLogo from '../../assets/images/LOGO-BIZSYS_preto.png';
+import iconSeta from '../../assets/icons/sinal.png';
+import imgBg from '../../assets/images/elementos-instrucoes.png';
 
 // Estilo:
 import './style.css';
@@ -184,48 +186,63 @@ export default function Instrucoes() {
 
   
     return (
-        <div className="Page Instrucoes grid">
+        <div className="Page Instrucoes grid animate__animated animate__fadeIn">
             <Header />
 
             <main className='mainPage Instrucoes'>
-                <h2 className="txt_emphasis">Como funciona</h2>    
+                <h2 className="txt_emphasis">
+                    Como funciona
+                </h2>    
 
                 <ul className="instructions">
                     <li className="item">
-                        <span>{'>>'}</span>
+                        <img className="icon" src={iconSeta} alt="" />
                         <p>
-                            Step 1
+                            Clique no botão Iniciar.
                         </p>
                     </li>
+
                     <li className="item">
-                        <span>{'>>'}</span>
+                        <img className="icon" src={iconSeta} alt="" />
                         <p>
-                            Step 2
+                            Deposite suas embalagens na máquina.
+                            Quando terminar, toque em Converter, 
+                            aqui no celular mesmo. Você precisa de
+                            pelo menos 700g para participar.
                         </p>
                     </li>
+
                     <li className="item">
-                        <span>{'>>'}</span>
+                        <img className="icon" src={iconSeta} alt="" />
                         <p>
-                            Step 3
+                            Aguarde a pesagem <br /> 
+                            e o cálculo dos seus créditos. 
                         </p>
                     </li>
+
                     <li className="item">
-                        <span>{'>>'}</span>
+                        <img className="icon" src={iconSeta} alt="" />
                         <p>
-                            Step 4
+                            Confira seu saldo <br />
+                            e troque por produtos da loja.
                         </p>
                     </li>
                 </ul>
 
 
                 <div className="container_btn">
-                    <button className="btn primary" onClick={handleSubmitStart} disabled={loadingSubmit}>
+                    <Button onClick={handleSubmitStart} disabled={loadingSubmit}>
                         {loadingSubmit ? (
                             <span>Iniciando...</span>
                         ) : (
                             <span>Iniciar</span>
                         )}
-                    </button>
+                    </Button>
+                </div>
+
+
+                <div className="bg_img">
+                    <img src={imgBg} alt="" />
                 </div>
             </main>
 

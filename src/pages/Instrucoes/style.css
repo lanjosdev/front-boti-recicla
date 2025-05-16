@@ -1,5 +1,47 @@
 .Page > .mainPage.Instrucoes {
-    border: 5px solid pink;
+    position: relative;
+    /* border: 5px solid pink; */
+    padding-top: 4.5rem;
 
-    
+    display: flex;
+    flex-direction: column;
+    gap: 2.2rem;
+
+    .instructions {
+        display: flex;
+        flex-direction: column;
+        gap: 1.87rem;
+
+        font-size: 1.8rem;
+
+        .item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+
+            .icon {
+                transform: translateY(85%);
+            }
+            > p {
+                max-width: 42rem;
+            }
+        }
+    }
+
+    .container_btn {
+
+        > .Button {
+            max-width: 22rem;
+        }
+    }
+
+    .bg_img {
+        /* border: 2px solid red; */
+        position: absolute;
+        right: 0;
+        bottom: 0;
+
+        padding-left: 2rem;
+        opacity: 0.9;
+    } 
 }
