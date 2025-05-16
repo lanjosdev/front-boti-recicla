@@ -12,4 +12,18 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 2rem;
+
+    padding: 1.5rem var(--p-lateral);
+
+    .container_text {
+        /* border: 4px solid red; */
+        height: 100%;
+        max-height: 55rem;
+        overflow-y: auto;
+    }
+
+    .Button {
+        max-width: 22rem;
+    }
 }

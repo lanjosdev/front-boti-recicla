@@ -1,9 +1,9 @@
 .Footer {
-    border: 3px solid var(--color-text);
+    /* border: 3px solid var(--color-text); */
     display: flex;
     justify-content: center;
 
-    padding: 1rem 1.5rem 1.5rem;
+    padding: 1.5rem 1.5rem 1rem;
 
     text-align: center;
     font-weight: 600;

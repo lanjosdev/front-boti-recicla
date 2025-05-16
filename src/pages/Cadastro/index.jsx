@@ -26,7 +26,7 @@ import { Participated } from "../../components/ui/Participated/Participated";
 import CookiesUtils from "../../utils/cookiesUtils";
 
 // Assets:
-// import imgLogo from '../../assets/images/LOGO-BIZSYS_preto.png';
+import iconSeta from '../../assets/icons/sinal.png';
 
 // Estilo:
 import './style.css';
@@ -196,7 +196,7 @@ export default function Cadastro() {
 
 
     return (
-        <div className="Page Cadastro grid">
+        <div className="Page Cadastro grid animate__animated animate__fadeIn">
             <Header />
 
             <main className='mainPage Cadastro'>
@@ -206,11 +206,11 @@ export default function Cadastro() {
                     </p>
 
                     <div className="cta">
-                        <span>{'>>'}</span>
-                        <p>
+                        <img className="icon" src={iconSeta} alt="" />
+                        <p className="txt_emphasis">
                             Cadastra-se, converta <br />
                             suas embalagens e troque seus créditos
-                            por produtos exclusivos da loja
+                            por produtos exclusivos da loja.
                         </p>
                     </div>
                 </div>
@@ -266,7 +266,8 @@ export default function Cadastro() {
                     <div className="msg_feedback error">
                         {errorsRender.map((item, idx)=> (
                             <p className="item" key={idx}>
-                                <i className="bi bi-exclamation-circle"></i>
+                                <span>X</span>
+                                {/* <i className="bi bi-exclamation-circle"></i> */}
                                 <span> {item}</span>
                             </p>
                         ))}

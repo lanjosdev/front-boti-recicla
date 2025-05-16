@@ -1,4 +1,4 @@
-// Funcionalidades / Libs:
+// Hooks / Libs:
 // import { useState, useEffect } from 'react';
 // import { Navigate } from 'react-router-dom';
 
@@ -6,7 +6,7 @@
 //import { formatarHora } from '../../../utils/formatarNumbers';
 
 // Assets:
-
+import imgLogo from '../../../assets/images/logo-BotiReciclaStore.png'
 
 // Estilo:
 import './header.css';
@@ -17,7 +17,9 @@ export function Header() {
 
     return (
         <header className="Header">
-            <h2>CABEÇALHO (LOGO)</h2>
+            <div className="logo">
+                <img src={imgLogo} alt="" className="img_logo" />
+            </div>
         </header>
     )        
 }

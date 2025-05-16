@@ -235,6 +235,11 @@
         /* color: var(--color-text); */
     }
 }
+
+.icon {
+    max-width: 1.5rem;
+    transform: translateY(50%);
+}
 /* ELEMENTOS-FIM */
 
 

@@ -1,7 +1,7 @@
 .Header {
-    border: 3px solid var(--color-text);
+    /* border: 3px solid var(--color-text); */
     display: flex;
     justify-content: center;
 
-    padding: 1rem;
+    padding: 1.5rem var(--p-lateral) 0.5rem;
 }

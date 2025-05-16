@@ -25,21 +25,27 @@
     padding-top: 0;
 
     .main_top {
+        margin-bottom: 2rem;
 
         .sub_title {
-            max-width: 35rem;
+            max-width: 32rem;
             margin: 0 auto;
 
             text-align: center;
             text-transform: uppercase;
+            line-height: 115%;
         }
 
         .cta {
+            margin-top: 3.5rem;
             display: flex;
+            align-items: flex-start;
             gap: 0.5rem;
 
             > p {
-                max-width: 35rem;
+                max-width: 36rem;
+                line-height: 115%;
+                letter-spacing: 0.01rem;
             }
         }
     }
