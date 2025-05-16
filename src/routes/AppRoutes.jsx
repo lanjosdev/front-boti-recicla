@@ -8,7 +8,7 @@ import ConfirmaPesagem from "../pages/ConfirmaPesagem";
 import Resultados from "../pages/Resultados";
 
 // Components:
-// import ControllerRouter from "./ControllerRouter";
+import ControllerRouter from "./ControllerRouter";
 
 
 
@@ -18,9 +18,9 @@ export default function AppRoutes() {
 
             <Route path="/" element={ <Cadastro /> } />
 
-            <Route path="/instrucoes" element={ <Instrucoes /> } />
+            <Route path="/instrucoes" element={ <ControllerRouter> <Instrucoes /> </ControllerRouter> } />
 
-            <Route path="/confirma-pesagem" element={ <ConfirmaPesagem /> } />
+            <Route path="/confirma-pesagem" element={ <ControllerRouter> <ConfirmaPesagem /> </ControllerRouter> } />
 
             <Route path="/resultados" element={ <Resultados /> } />
 

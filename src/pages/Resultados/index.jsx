@@ -8,6 +8,7 @@ import { APP_CONSTANTS } from "../../config/appConstants";
 
 
 // Components:
+import { toast } from "react-toastify";
 import { Header } from "../../components/layout/Header/Header";
 import { Footer } from "../../components/layout/Footer/Footer";
 import { LoadingScreen } from "../../components/ui/LoadingScreen/LoadingScreen";
@@ -40,17 +41,24 @@ export default function Resultados() {
             setLoading(true);
             console.log('Effect /Resultados');
 
-            const resultsCookie = JSON.parse(Cookies.get(APP_CONSTANTS.COOKIE_RESULTS_NAME) || null);
-            console.log(resultsCookie)
-            if(resultsCookie) {
-                setDataResults(prev => ({
-                    ...prev, 
-                    ...resultsCookie, 
-                    carbon: resultsCookie.weight * 1.7
-                }));
+            try {
+                const resultsCookie = JSON.parse(Cookies.get(APP_CONSTANTS.COOKIE_RESULTS_NAME) || null);
+                console.log(resultsCookie)
+
+                if(resultsCookie) {
+                    setDataResults(prev => ({
+                        ...prev, 
+                        ...resultsCookie, 
+                        carbon: resultsCookie.weight * 1.7
+                    }));
+                }
+                else {
+                    navigate('/instrucoes');
+                }
             }
-            else {
-                navigate('/instrucoes');
+            catch(error) {
+                console.error('DETALHES DO ERRO', error);
+                toast.error('Ops, houve um erro');
             }
 
             setLoading(false);
