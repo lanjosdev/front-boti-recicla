@@ -148,6 +148,16 @@ export default function ConfirmaPesagem() {
             return;
         }
 
+        const idParticipationCookie = Cookies.get(APP_CONSTANTS.COOKIE_ID_PARTICIPATION_NAME);
+        if(!idParticipationCookie) {
+            console.warn('SEM ID_PARTICIPATION');
+            setLoadingSubmit(false);
+            toast.warn('Necessário iniciar a pesagem');
+            navigate('/instrucoes');
+            return;
+        }
+
+
 
         // REQUEST:
         try {
@@ -180,6 +190,13 @@ export default function ConfirmaPesagem() {
                     //     "message": "Nenhum resultado encontrado para o id informado. Por favor, verifique."
                     // }
 
+                    case 'Nenhum usuário encontrado para o id informado. Por favor, verifique.':
+                        console.error('APAGAAA TUDDDOOOO COOKIES??????')
+                        break;
+                    case 'Usuário informado não tem nenhuma pesagem para finalizar.':
+                        toast.warn('Necessário iniciar a pesagem');
+                        navigate('/instrucoes');
+                        break;
                     case 'A pesagem desse usuário já foi finalizada.':
                         getResults(idUserCookie);
                         break;

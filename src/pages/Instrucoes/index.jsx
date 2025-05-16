@@ -73,9 +73,7 @@ export default function Instrucoes() {
 
                 if(response.message == 'error') {
                     toast.error('Ops, houve um erro');
-                    return;
                 }
-                toast.warn(response.message);
             }
             else {
                 console.error('Erro inesperado');
