@@ -12,7 +12,35 @@
     }
 
 
-    .loader_content {
+    .animate_img {
+        position: relative;
+        /* border: 2px solid red; */
+        width: 27rem;
+        height: 27rem;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .img {
+            /* width: 10rem;
+            height: 10rem; */
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1.8s linear infinite;
+
+            position: absolute;
+        }
+
+        p {
+            max-width: 15rem;
+            font-size: 2rem;
+            font-weight: 600;
+            text-shadow: 0 0 5px #ffffffef;
+            text-align: center;
+        }
+    }
+    /* .loader_content {
         width: 10rem;
         height: 10rem;
         border: 2px solid var(--color-text);
@@ -23,9 +51,5 @@
         animation: rotation 1s linear infinite;
     }
 
-    p {
-        font-size: 1.8rem;
-        font-weight: 600;
-        text-shadow: 0 0 5px #ffffffef;
-    }
+     */
 }

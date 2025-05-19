@@ -205,6 +205,13 @@ export default function Instrucoes() {
                     <li className="item">
                         <img className="icon" src={iconSeta} alt="" />
                         <p>
+                            Aguarde a liberação da pesagem na tela da máquina.
+                        </p>
+                    </li>
+
+                    <li className="item">
+                        <img className="icon" src={iconSeta} alt="" />
+                        <p>
                             Deposite suas embalagens na máquina.
                             Quando terminar, toque em Converter, 
                             aqui no celular mesmo. Você precisa de

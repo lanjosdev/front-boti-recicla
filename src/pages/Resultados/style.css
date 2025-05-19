@@ -1,6 +1,56 @@
 .Page > .mainPage.Resultados {
     position: relative;
-    border: 5px solid pink;
+    /* border: 5px solid rgb(231, 9, 46); */
 
-    
+
+    > h2 {
+        line-height: 115%;
+
+        margin-bottom: 2rem;
+    }
+
+    .Border {
+        max-width: 100%;
+        padding: 4rem 2.2rem;
+        gap: 1rem;
+
+        .info_item {
+            /* background-color: aqua; */
+
+            > p {
+                line-height: 100%;
+            } 
+
+            .label {
+                font-size: 1.4rem;
+            }
+            .data {
+                font-size: 6rem;
+                
+                .AnimateNums {
+                    line-height: 80%;
+                    transform: translateY(5%);
+                }
+            }
+        }
+
+        .divider {
+            /* background-color: red; */
+            width: 100%;
+            max-width: 28rem;
+        }
+    }
+
+    .bg_details {
+        position: absolute;
+        left: 1.5rem;
+        bottom: 0;
+        width: 90%;
+
+        display: flex;
+        gap: 50%;
+
+        font-size: 1rem;
+        user-select: none;
+    }
 }

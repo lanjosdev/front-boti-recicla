@@ -1,5 +1,5 @@
 // Funcionalidades / Libs:
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 // Pages:
 import Cadastro from "../pages/Cadastro";
@@ -24,6 +24,9 @@ export default function AppRoutes() {
 
             <Route path="/resultados" element={ <Resultados /> } />
 
+
+            {/* Rota fallback para redirecionar para a raiz (/) */}
+            <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
     )
 }

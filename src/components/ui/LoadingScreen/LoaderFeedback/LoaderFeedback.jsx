@@ -9,7 +9,7 @@
 // Utils:
 
 // Assets:
-// import LogoHeader from '../../assets/logo-header.png';
+import imgCircle from '../../../../assets/images/totem-calculoCircle.png';
 
 // Estilo:
 import './loaderfeedback.css';
@@ -24,9 +24,13 @@ export function LoaderFeedback({ textFeedback, heightStretch }) {
 
     return (
         <div className={`LoaderFeedback ${heightStretch ? 'heightStretch' : ''}`}>
-            <span className="loader_content"></span>
+            {/* <span className="loader_content"></span> */}
 
-            {textFeedback && <p>{textFeedback}</p>}
+            <div className="animate_img">
+                <img className='img' src={imgCircle} alt="" />
+
+                {textFeedback && <p>{textFeedback}</p>}
+            </div>
         </div>
     )        
 }

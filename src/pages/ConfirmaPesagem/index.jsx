@@ -276,7 +276,7 @@ export default function ConfirmaPesagem() {
             <Footer />
                         
             {loadingResults && (
-                <LoadingScreen textFeedback='Convertendo em créditos...' />
+                <LoadingScreen textFeedback='Convertendo em créditos' />
             )}
         </div>
     );

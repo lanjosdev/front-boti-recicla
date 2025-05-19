@@ -6,12 +6,12 @@ import { useNavigate } from "react-router-dom";
 // CONSTANTES:
 import { APP_CONSTANTS } from "../../config/appConstants";
 
-
 // Components:
 import { toast } from "react-toastify";
 import { Header } from "../../components/layout/Header/Header";
 import { Footer } from "../../components/layout/Footer/Footer";
 import { Border } from "../../components/ui/Border/Border";
+import { AnimateNums } from "../../components/features/animateNums/AnimateNums";
 import { Underweight } from "../../components/ui/Underweight/Underweight";
 import { LoadingScreen } from "../../components/ui/LoadingScreen/LoadingScreen";
 
@@ -44,18 +44,28 @@ export default function Resultados() {
             console.log('Effect /Resultados');
 
             try {
-                // const resultsCookie = JSON.parse(Cookies.get(APP_CONSTANTS.COOKIE_RESULTS_NAME) || null);
-                const resultsCookie = {
-                    name: 'Lucas Souza botimedina',
-                    weight: 700,
-                    credits: 0,
-                };
-                console.log(resultsCookie)
+                const configApp = JSON.parse(Cookies.get(APP_CONSTANTS.COOKIE_CONFIG_NAME) || null);
+                console.log(configApp)
+                const resultsCookie = JSON.parse(Cookies.get(APP_CONSTANTS.COOKIE_RESULTS_NAME) || null);
+                // const resultsCookie = {
+                //     name: 'Lucas Anjos botialok',
+                //     weight: 80255,
+                //     credits: 42000,
+                // };
 
                 if(resultsCookie) {
+                    if(Array.isArray(configApp?.CODIGOS)) {
+                        resultsCookie.name = resultsCookie.name
+                            .replace(new RegExp(`\\b${configApp.CODIGOS[0]}\\b`, 'gi'), '')
+                            .replace(new RegExp(`\\b${configApp.CODIGOS[1]}\\b`, 'gi'), '')
+                            .replace(/\s{2,}/g, ' ')  // Remove espaços duplos
+                            .trim(); // Remove espaços nas pontas
+                    }
+                    console.log(resultsCookie);
+
                     setDataResults(prev => ({
                         ...prev, 
-                        ...resultsCookie, 
+                        ...resultsCookie,
                         carbon: resultsCookie.weight * 1.7
                     }));
                 }
@@ -73,38 +83,17 @@ export default function Resultados() {
         initializePage();
     }, [navigate]);
 
-    // useEffect(()=> {
-    //     function getConfigApp() {
-    //         setLoading(true);
 
-    //         try {
-    //             const configApp = JSON.parse(Cookies.get(APP_CONSTANTS.COOKIE_CONFIG_NAME) || null);
-    //             console.log(configApp);
 
-    //             if(configApp?.CODIGOS) {
-    //                 const newDataResults = {...dataResults}
-    //             }
-    //         }
-    //         catch(error) {
-    //             console.error('DETALHES DO ERRO', error);
-    //             // toast.error('Ops, houve um erro');
-    //         }
-
-    //         setLoading(false);
-    //     } 
-    //     getConfigApp();
-    // }, [navigate]);
-
-    
 
 
   
     return (
-        <div className="Page Resultados grid">
+        <div className="Page Resultados grid animate__animated animate__fadeIn">
             <Header />
             
             {loading ? (
-                <LoadingScreen textFeedback='Carregando resultados...' />
+                <LoadingScreen textFeedback='Carregando resultados' />
             ) : (
                 <main className='mainPage Resultados'>
                     {dataResults.weight < 700 ? (
@@ -113,12 +102,10 @@ export default function Resultados() {
                         <>
                         <h2>
                             Obrigado, <br />
-                            <span className="txt_uppercase">{dataResults.name}</span>
+                            <span className="txt_uppercase txt_emphasis">
+                                {dataResults.name}
+                            </span>
                         </h2>    
-
-                        {/* <p>Peso: {dataResults.weight}</p>
-                        <p>Créditos: {dataResults.credits}</p>
-                        <p>Carbano: {dataResults.carbon > 0 ? dataResults.carbon.toFixed(1) : dataResults.carbon}</p> */}
 
                         {/* Componente div border */}
                         <Border>
@@ -127,11 +114,15 @@ export default function Resultados() {
                                     Você depositou:
                                 </p>
 
-                                <p className="data">
-                                    {dataResults.weight}g
-                                </p>
-                                <p className="data_details">
-                                    de embalagens recicláveis
+                                <div className="data">
+                                    <AnimateNums 
+                                    valorFinal={dataResults.weight} 
+                                    sufixo="g" 
+                                    formatBr={true}
+                                    />
+                                </div>
+                                <p className="data_details txt_emphasis">
+                                    de embalagens <br /> recicláveis
                                 </p>
                             </div>
 
@@ -142,10 +133,10 @@ export default function Resultados() {
                                     Que foram convertidos em:
                                 </p>
 
-                                <p className="data">
-                                    {dataResults.credits}
-                                </p>
-                                <p className="data_details">
+                                <div className="data">
+                                    <AnimateNums valorFinal={dataResults.credits} />
+                                </div>
+                                <p className="data_details txt_emphasis">
                                     créditos
                                 </p>
                             </div>
@@ -157,15 +148,24 @@ export default function Resultados() {
                                     Gerando uma economia de:
                                 </p>
 
-                                <p className="data">
-                                    {dataResults.carbon > 0 ? dataResults.carbon.toFixed(1) : dataResults.carbon}g
-                                </p>
-                                <p className="data_details">
+                                <div className="data">
+                                    <AnimateNums 
+                                    valorFinal={dataResults.carbon} 
+                                    sufixo="g" 
+                                    casasDecimais={1} 
+                                    formatBr={true} 
+                                    />
+                                </div>
+                                <p className="data_details txt_emphasis">
                                     CO<sup>2</sup> na atmosfera
                                 </p>
                             </div>
-                            
                         </Border>
+
+                        <p className="bg_details">
+                            <span>20</span>
+                            <span>25</span>
+                        </p>
                         </>
                     )}
                 </main>

@@ -1,6 +1,6 @@
 /* Estilo base de page */
 .Page {
-    border: 8px solid yellow;
+    /* border: 8px solid yellow; */
     min-height: 100dvh;
     /* overflow-x: hidden; */
 
@@ -10,7 +10,7 @@
 
     
     > .mainPage {
-        border: 5px solid yellowgreen;
+        /* border: 5px solid yellowgreen; */
         flex: 1;
         
         padding: 3rem var(--p-lateral);
