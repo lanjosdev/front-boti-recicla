@@ -15,7 +15,7 @@ import { Button } from '../Button/Button';
 import './participated.css';
 
 
-export function Participated({ close }) {
+export function Participated({ close, underweight }) {
 
 
     return (
@@ -25,10 +25,13 @@ export function Participated({ close }) {
                     Que pena.
                 </h2>
 
+
+                {underweight ? (
                 <div className="block_text">
                     <p>
-                        Infelizmente você só pode participar
-                        uma vez dessa ativação.
+                        Infelizmente você não atingiu a 
+                        quantidade mínima de 700g para
+                        receber créditos.
                     </p>
                     <p>
                         Mas para continuar reciclando suas
@@ -37,6 +40,20 @@ export function Participated({ close }) {
                         Boti Recicla nas lojas O Boticário.
                     </p>
                 </div>
+                ) : (
+                <div className="block_text">
+                    <p>
+                        Infelizmente você só pode participar
+                        <span className="txt_emphasis"> uma vez</span> dessa ativação.
+                    </p>
+                    <p>
+                        Mas para continuar reciclando suas
+                        embalagens e ajudando a preservar o
+                        planeta, conte com os pontos de coleta
+                        Boti Recicla nas lojas O Boticário.
+                    </p>
+                </div>
+                )}
             </div>
 
             {/* <button type='button' className='btn primary' onClick={close}>

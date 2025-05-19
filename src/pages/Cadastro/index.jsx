@@ -207,7 +207,7 @@ export default function Cadastro() {
 
                     <div className="cta">
                         <img className="icon" src={iconSeta} alt="" />
-                        <p className="txt_emphasis">
+                        <p className="">
                             Cadastra-se, converta <br />
                             suas embalagens e troque seus créditos
                             por produtos exclusivos da loja.
@@ -226,7 +226,7 @@ export default function Cadastro() {
                         id="name" 
                         value={formDataRegister.name} 
                         setValue={handleChangeForm} 
-                        placeholder='Nome Completo'
+                        placeholder='NOME SOBRENOME'
                         />
 
                         <label htmlFor="name">Nome</label>
@@ -251,7 +251,7 @@ export default function Cadastro() {
                         inputMode="email"
                         id="email" 
                         className="input"
-                        placeholder="email@email.com" 
+                        placeholder="XXXXXX@XXXXXX.COM" 
                         value={formDataRegister.email}
                         onChange={handleChangeForm}
                         required
@@ -262,7 +262,7 @@ export default function Cadastro() {
 
 
                     {/* Mensagens de validação */}
-                    {errorsRender.length > 0 && (
+                    {(errorsRender.length > 0 && !errorsRender.includes('CPF já cadastrado')) && (
                     <div className="msg_feedback error">
                         {errorsRender.map((item, idx)=> (
                             <p className="item" key={idx}>

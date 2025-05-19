@@ -3,7 +3,7 @@
     --size-square: 0.6rem;
 
     position: relative;
-    background-color: transparent;
+    background-color: var(--color-bg-1);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,7 +11,8 @@
 
     border: 0.1rem solid var(--color-text);
     width: 100%;
-    max-width: fit-content;
+    /* max-width: fit-content; */
+    max-width: 22rem;
     height: auto;
     /* min-height: 4.2rem; */
     padding: 1rem 2rem;    
@@ -26,6 +27,14 @@
 
     .children {
         transform: translateY(-7%);
+
+        text-shadow:
+        0 0 0.02rem var(--color-text),
+        0.02rem 0 0.02rem var(--color-text),
+        -0.02rem 0 0.02rem var(--color-text),
+        0 0.02rem 0.02rem var(--color-text),
+        0 -0.02rem 0.02rem var(--color-text);
+        /* letter-spacing: 0.01rem; */
     }
 
     .squares {

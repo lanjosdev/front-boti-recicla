@@ -166,14 +166,14 @@
     /* gap: 0.2rem; */
 
     > label {
-        font-size: 1.4rem;
+        font-size: 1.5rem;
         text-shadow:
         0 0 0.02rem var(--color-text),
         0.02rem 0 0.02rem var(--color-text),
         -0.02rem 0 0.02rem var(--color-text),
         0 0.02rem 0.02rem var(--color-text),
         0 -0.02rem 0.02rem var(--color-text);
-        letter-spacing: 0.1rem;
+        letter-spacing: 0.01rem;
 
         padding-left: 1rem;
     }
@@ -182,10 +182,11 @@
     
     .input {
         border: 0.2rem solid var(--color-text);
-        background-color: #ffffff8e;
+        background-color: transparent;
         padding: 0.6rem 0.9rem 0.9rem;
         width: 100%;
         transition: all 0.3s ease-in-out;
+        font-size: 16px;
 
         &:focus {
             background-color: #fff;
@@ -217,7 +218,7 @@
     padding-bottom: 2.5rem;
     
     &::before {
-        content: '..........................................................................................';
+        content: '...............................................................................................';
     }
 }
 
@@ -242,7 +243,7 @@
 
 .icon {
     max-width: 1.5rem;
-    transform: translateY(50%);
+    transform: translateY(55%);
 }
 /* ELEMENTOS-FIM */
 
