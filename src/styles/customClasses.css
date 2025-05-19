@@ -12,6 +12,10 @@
     text-transform: capitalize;
 }
 
+.txt_uppercase {
+    text-transform: uppercase;
+}
+
 .txt_emphasis {
     text-shadow:
     0 0 0.02rem var(--color-text),

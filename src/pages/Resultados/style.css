@@ -1,4 +1,5 @@
 .Page > .mainPage.Resultados {
+    position: relative;
     border: 5px solid pink;
 
     

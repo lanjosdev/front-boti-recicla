@@ -11,6 +11,8 @@ import { APP_CONSTANTS } from "../../config/appConstants";
 import { toast } from "react-toastify";
 import { Header } from "../../components/layout/Header/Header";
 import { Footer } from "../../components/layout/Footer/Footer";
+import { Border } from "../../components/ui/Border/Border";
+import { Underweight } from "../../components/ui/Underweight/Underweight";
 import { LoadingScreen } from "../../components/ui/LoadingScreen/LoadingScreen";
 
 // Assets:
@@ -42,7 +44,12 @@ export default function Resultados() {
             console.log('Effect /Resultados');
 
             try {
-                const resultsCookie = JSON.parse(Cookies.get(APP_CONSTANTS.COOKIE_RESULTS_NAME) || null);
+                // const resultsCookie = JSON.parse(Cookies.get(APP_CONSTANTS.COOKIE_RESULTS_NAME) || null);
+                const resultsCookie = {
+                    name: 'Lucas Souza botimedina',
+                    weight: 700,
+                    credits: 0,
+                };
                 console.log(resultsCookie)
 
                 if(resultsCookie) {
@@ -66,6 +73,28 @@ export default function Resultados() {
         initializePage();
     }, [navigate]);
 
+    // useEffect(()=> {
+    //     function getConfigApp() {
+    //         setLoading(true);
+
+    //         try {
+    //             const configApp = JSON.parse(Cookies.get(APP_CONSTANTS.COOKIE_CONFIG_NAME) || null);
+    //             console.log(configApp);
+
+    //             if(configApp?.CODIGOS) {
+    //                 const newDataResults = {...dataResults}
+    //             }
+    //         }
+    //         catch(error) {
+    //             console.error('DETALHES DO ERRO', error);
+    //             // toast.error('Ops, houve um erro');
+    //         }
+
+    //         setLoading(false);
+    //     } 
+    //     getConfigApp();
+    // }, [navigate]);
+
     
 
 
@@ -78,18 +107,67 @@ export default function Resultados() {
                 <LoadingScreen textFeedback='Carregando resultados...' />
             ) : (
                 <main className='mainPage Resultados'>
-                    <h2>
-                        Obrigado, <br />
-                        {dataResults.name}
-                    </h2>    
-                    <br />
+                    {dataResults.weight < 700 ? (
+                        <Underweight onclick={()=>navigate('/')} />
+                    ) : (
+                        <>
+                        <h2>
+                            Obrigado, <br />
+                            <span className="txt_uppercase">{dataResults.name}</span>
+                        </h2>    
 
-                    {/* Componente div border */}
-                    <div>
-                        <p>Peso: {dataResults.weight}</p>
+                        {/* <p>Peso: {dataResults.weight}</p>
                         <p>Créditos: {dataResults.credits}</p>
-                        <p>Carbano: {dataResults.carbon > 0 ? dataResults.carbon.toFixed(1) : dataResults.carbon}</p>
-                    </div>
+                        <p>Carbano: {dataResults.carbon > 0 ? dataResults.carbon.toFixed(1) : dataResults.carbon}</p> */}
+
+                        {/* Componente div border */}
+                        <Border>
+                            <div className="info_item">
+                                <p className="label">
+                                    Você depositou:
+                                </p>
+
+                                <p className="data">
+                                    {dataResults.weight}g
+                                </p>
+                                <p className="data_details">
+                                    de embalagens recicláveis
+                                </p>
+                            </div>
+
+                            <div className="divider"></div>                
+
+                            <div className="info_item">
+                                <p className="label">
+                                    Que foram convertidos em:
+                                </p>
+
+                                <p className="data">
+                                    {dataResults.credits}
+                                </p>
+                                <p className="data_details">
+                                    créditos
+                                </p>
+                            </div>
+
+                            <div className="divider"></div>
+
+                            <div className="info_item">
+                                <p className="label">
+                                    Gerando uma economia de:
+                                </p>
+
+                                <p className="data">
+                                    {dataResults.carbon > 0 ? dataResults.carbon.toFixed(1) : dataResults.carbon}g
+                                </p>
+                                <p className="data_details">
+                                    CO<sup>2</sup> na atmosfera
+                                </p>
+                            </div>
+                            
+                        </Border>
+                        </>
+                    )}
                 </main>
             )}
 
