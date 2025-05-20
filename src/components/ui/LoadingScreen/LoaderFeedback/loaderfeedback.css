@@ -27,7 +27,7 @@
             height: 10rem; */
             display: inline-block;
             box-sizing: border-box;
-            animation: rotation 1.8s linear infinite;
+            animation: rotation 1.5s linear infinite;
 
             position: absolute;
         }

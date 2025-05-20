@@ -264,7 +264,8 @@ export default function ConfirmaPesagem() {
                     </Button>
                 </div>
                 
-                <div className="bg_img">
+
+                <div className={`bg_imgBlock ${loadingSubmit || loadingResults ? 'loading' : ''}`}>
                     <p>
                         <span>20</span>
                         <span>25</span>
@@ -275,8 +276,11 @@ export default function ConfirmaPesagem() {
 
             <Footer />
                         
+            {loadingSubmit && (
+                <LoadingScreen textFeedback='Calculando peso' />
+            )}
             {loadingResults && (
-                <LoadingScreen textFeedback='Convertendo em créditos' />
+                <LoadingScreen textFeedback='Gerando créditos' />
             )}
         </div>
     );

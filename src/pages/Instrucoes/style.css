@@ -45,4 +45,9 @@
         padding-left: 2rem;
         opacity: 0.9;
     } 
+    .bg_imgBlock {
+        margin-top: -0.5rem;
+        margin-right: -2.7rem;
+        opacity: 0.9;
+    }
 }

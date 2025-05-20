@@ -248,7 +248,7 @@ export default function Instrucoes() {
                 </div>
 
 
-                <div className="bg_img">
+                <div className="bg_imgBlock">
                     <img src={imgBg} alt="" />
                 </div>
             </main>

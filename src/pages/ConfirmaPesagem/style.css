@@ -1,8 +1,9 @@
 .Page > .mainPage.ConfirmaPesagem {
     /* border: 5px solid aqua; */
+    position: relative;
     
     .container_btn {
-        margin-top: 2.5rem;
+        margin-top: 3rem;
     }
 
     .bg_img {
@@ -18,5 +19,47 @@
             margin-bottom: 5rem;
             opacity: 0.9;
         }
+    }
+    .bg_imgBlock {
+        margin-top: 0;
+        margin-right: 0;
+        margin: 7.5rem -0.8rem -2.5rem;
+        flex: 1;
+        
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+
+        p {
+            font-size: 1rem;
+            display: flex;
+            justify-content: flex-end;
+            gap: 60%;
+            padding-right: 1rem;
+
+            margin-bottom: 4.5rem;
+            opacity: 0.9;
+        }
+
+
+        &.loading {
+            z-index: 100;
+
+            p {
+                display: none;
+            }
+        }
+    }
+}
+
+.Page.ConfirmaPesagem {
+
+    .Header {
+        z-index: 100;
+    }
+
+    .Footer {
+        padding: 1rem 2.7rem 1rem;
+        z-index: 100;
     }
 }
