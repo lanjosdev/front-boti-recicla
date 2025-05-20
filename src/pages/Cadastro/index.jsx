@@ -26,7 +26,7 @@ import { Participated } from "../../components/ui/Participated/Participated";
 import CookiesUtils from "../../utils/cookiesUtils";
 
 // Assets:
-import iconSeta from '../../assets/icons/sinal.png';
+import iconSeta from '../../assets/icons/sinal.webp';
 
 // Estilo:
 import './style.css';

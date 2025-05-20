@@ -21,8 +21,8 @@ import { Button } from "../../components/ui/Button/Button";
 import { LoadingScreen } from "../../components/ui/LoadingScreen/LoadingScreen";
 
 // Assets:
-import iconSeta from '../../assets/icons/sinal.png';
-import imgBg from '../../assets/images/elementos-Totem.png'
+import iconSeta from '../../assets/icons/sinal.webp';
+import imgBg from '../../assets/images/elementos-Totem.webp';
 
 // Estilo:
 import './style.css';

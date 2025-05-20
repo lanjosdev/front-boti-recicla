@@ -20,8 +20,8 @@ import { Footer } from "../../components/layout/Footer/Footer";
 import { Button } from "../../components/ui/Button/Button";
 
 // Assets:
-import iconSeta from '../../assets/icons/sinal.png';
-import imgBg from '../../assets/images/elementos-instrucoes.png';
+import iconSeta from '../../assets/icons/sinal.webp';
+import imgBg from '../../assets/images/elementos-instrucoes.webp';
 
 // Estilo:
 import './style.css';

@@ -9,7 +9,7 @@
 // Utils:
 
 // Assets:
-import imgCircle from '../../../../assets/images/totem-calculoCircle.png';
+import imgCircle from '../../../../assets/images/totem-calculoCircle.webp';
 
 // Estilo:
 import './loaderfeedback.css';

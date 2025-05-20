@@ -6,7 +6,7 @@
 //import { formatarHora } from '../../../utils/formatarNumbers';
 
 // Assets:
-import imgLogo from '../../../assets/images/logo-BotiReciclaStore.png'
+import imgLogo from '../../../assets/images/logo-BotiReciclaStore.webp';
 
 // Estilo:
 import './header.css';

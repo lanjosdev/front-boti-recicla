@@ -6,7 +6,7 @@
 //import { formatarHora } from '../../../utils/formatarNumbers';
 
 // Assets:
-import imgFooter from '../../../assets/images/footer.png';
+import imgFooter from '../../../assets/images/footer.webp';
 
 // Estilo:
 import './footer.css';
