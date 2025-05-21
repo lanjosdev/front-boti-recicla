@@ -72,13 +72,8 @@ export default function ConfirmaPesagem() {
                 console.log(response);
     
                 if(response.success) {
-                    if(response.data.finished_interaction) {
-                        if(response.data.weight == null && response.data.credits == null) {
-                            console.warn('TIMEOUT');
-                            toast.warn('TIMEOUT');
-                            // ??? Remover cookies e ir pra tela inicial
-                            //=// return;
-                        }
+                    if(response.data.credits != null) {
+                        console.log('=====================PEGOU RESULTADOS========================');
                         
                         const dataResults = {
                             name: response.data.name || null,

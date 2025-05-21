@@ -124,7 +124,7 @@ export default function Instrucoes() {
                     secure: true,
                     sameSite: 'Strict'
                 });
-                toast.success('Pesagem liberada');
+                // toast.success('Pesagem liberada');
 
                 navigate('/confirma-pesagem');
             }

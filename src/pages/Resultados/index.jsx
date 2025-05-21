@@ -116,8 +116,8 @@ export default function Resultados() {
 
                                 <div className="data">
                                     <AnimateNums 
-                                    valorFinal={dataResults.weight} 
-                                    sufixo="g" 
+                                    valorFinal={dataResults.carbon > 999999 ? (dataResults.weight / 1000) : dataResults.weight} 
+                                    sufixo={dataResults.carbon > 999999 ? 'Kg' : 'g'} 
                                     formatBr={true}
                                     />
                                 </div>
@@ -150,8 +150,8 @@ export default function Resultados() {
 
                                 <div className="data">
                                     <AnimateNums 
-                                    valorFinal={dataResults.carbon} 
-                                    sufixo="g" 
+                                    valorFinal={dataResults.carbon > 999999 ? (dataResults.carbon / 1000) : dataResults.carbon} 
+                                    sufixo={dataResults.carbon > 999999 ? 'Kg' : 'g'}
                                     casasDecimais={1} 
                                     formatBr={true} 
                                     />
