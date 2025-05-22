@@ -7,6 +7,16 @@
         line-height: 115%;
 
         margin-bottom: 2rem;
+
+        .txt_uppercase {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+            max-width: 59rem;
+        }
     }
 
     .Border {

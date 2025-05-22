@@ -17,7 +17,3 @@
 
     user-select: none;
 }
-
-body:has(.LoadingScreen) {
-    overflow-y: hidden;
-}

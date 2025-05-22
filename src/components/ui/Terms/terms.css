@@ -20,7 +20,11 @@
         max-height: 55rem;
         overflow-y: auto;
 
-        padding: 0 1.5rem;
+        padding: 0 1.5rem 4rem;
+
+        > p > .txt_link {
+            color: blue;
+        }
     }
 
     .Button {

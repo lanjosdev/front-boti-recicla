@@ -19,8 +19,9 @@ import { InputName } from "../../components/Forms/InputName/InputName";
 import { InputCPF } from "../../components/Forms/InputCPF/InputCPF";
 import { Button } from "../../components/ui/Button/Button";
 import { Footer } from "../../components/layout/Footer/Footer";
-import { Terms } from "../../components/ui/Terms/Terms";
+
 import { Participated } from "../../components/ui/Participated/Participated";
+import { Alert } from "../../components/ui/Alert/Alert";
 
 // Utils:
 import CookiesUtils from "../../utils/cookiesUtils";
@@ -35,6 +36,12 @@ import './style.css';
 
 export default function Cadastro() {
     // Constantes do componente:
+    const configsApp = JSON.parse(Cookies.get(APP_CONSTANTS.COOKIE_CONFIG_NAME) || null);
+    const cookiesExpires = configsApp.COOKIES_EXPIRES || 7;
+    console.log(cookiesExpires)
+    const cpfBlock = configsApp.CPF_BLOCK || false;
+    console.log(cpfBlock)
+
     const navigate = useNavigate();
     
     // Estados do componente:
@@ -53,8 +60,17 @@ export default function Cadastro() {
         cpf: ''
     });
 
-    const [showTerms, setShowTerms] = useState(false);
+    // const [showTerms, setShowTerms] = useState(false);
     const [showParticipated, setShowParticipated] = useState(false);
+
+    const defaultAlert = {
+        open: false,
+        title: 'Aviso',
+        text: null
+    };
+    const [alert, setAlert] = useState(defaultAlert);
+
+    // const [notify, setNotify] = useState(0);
 
 
 
@@ -104,11 +120,11 @@ export default function Cadastro() {
         setFormDataRegister((prev) => ({ ...prev, [id]: value }));
     }
 
-    function handleShowTerms() {
-        if(!loadingSubmit) {
-            setShowTerms(true);
-        }
-    }
+    // function handleShowTerms() {
+    //     if(!loadingSubmit) {
+    //         setShowTerms(true);
+    //     }
+    // }
 
     
     // SUBMIT API:
@@ -121,7 +137,12 @@ export default function Cadastro() {
         // VALIDAÇÕES:
         if(formDataRegister.cpf.length < 14) {
             setValidationErrors(prev => ({...prev, cpf: ['CPF incompleto']}));
-            toast.warn('Preencha o formulário corretamente');
+            // toast.warn('Preencha o formulário corretamente');
+            setAlert({
+                open: true,
+                title: 'Aviso',
+                text: 'Preencha o formulário corretamente'
+            });
             setLoadingSubmit(false);
             return;
         }
@@ -131,6 +152,9 @@ export default function Cadastro() {
         try {
             const bodyReq = {...formDataRegister};
             bodyReq.cpf = bodyReq.cpf.replace(/\D/g, '');
+            // if(notify == 1) {
+            //     bodyReq.notify = 1;
+            // }
 
             const response = await RegisterService.Register(bodyReq);
             console.log(response);
@@ -139,16 +163,18 @@ export default function Cadastro() {
                 const token = response.data.token;
                 Cookies.set(APP_CONSTANTS.COOKIE_AUTH_TOKEN_NAME, token, { 
                     secure: true,
-                    sameSite: 'Strict'
+                    sameSite: 'Strict',
+                    expires: cookiesExpires
                 });
 
                 const idUser = response.data.id_user_register;
                 Cookies.set(APP_CONSTANTS.COOKIE_ID_USER_NAME, idUser, { 
                     secure: true,
-                    sameSite: 'Strict'
+                    sameSite: 'Strict',
+                    expires: cookiesExpires
                 });
 
-                toast.success('Cadastro realizado com sucesso.');
+                // toast.success('Cadastro realizado com sucesso.');
                 CookiesUtils.RemoveParticipation();
                 
                 navigate('/instrucoes');
@@ -167,10 +193,20 @@ export default function Cadastro() {
                         setValidationErrors(prev => ({...prev, cpf: ['CPF já cadastrado']}));
                         break;
                     case 'error':
-                        toast.error('Ops, houve um erro');
+                        // toast.error('Ops, houve um erro');
+                        setAlert({
+                            open: true,
+                            title: 'Ops, houve um erro',
+                            text: 'Tente novamente'
+                        });
                         break;
                     default:
-                        toast.warn(response.message);
+                        // toast.warn(response.message);
+                        setAlert({
+                            open: true,
+                            title: 'Aviso',
+                            text: response.message
+                        });
                 }
 
                 // if(response.message == "CPF já registrado. Por favor, verifique.") {
@@ -275,13 +311,44 @@ export default function Cadastro() {
                     )}
                     
 
+                    <div className="terms">
+                        <div className="term">
+                            {/* <input type="checkbox" name="" id="" required /> */}
+                            <p>
+                                Ao se cadastrar, você concorda
+                                com os termos da nossa <a className="txt_link" href="/termos-boticario.pdf" target="_blank">Política de Privacidade e Regulamento</a>.
+                            </p>
+                        </div>
+
+                        {/* <div className="term">
+                            <input type="checkbox" name="" id="" checked={notify} onChange={()=> setNotify(prev => !prev)} />
+                            <p>
+                                Aceito receber ofertas e novidades de O Boticário por e-mail.
+                            </p>
+                        </div> */}
+                    </div>
+
+                    {/* <p className="alert_terms">
+                        Ao se cadastrar, você concorda <br />
+                        com os termos da nossa <a className="call_terms txt_link" href={docPDF} download>Política de Responsabilidade</a>.
+                    </p>
                     <p className="alert_terms">
                         Ao se cadastrar, você concorda <br />
-                        com os termos da nossa <span className="call_terms txt_link" onClick={handleShowTerms}>Política de Privacidade</span>.
-                    </p>
+                        com os termos da nossa <a className="call_terms txt_link" href={docPDF} target="_blank">Política de Responsabilidade</a>.
+                    </p> */}
+
 
                     <div className="container_btn">
-                        {/* <button className="btn primary" disabled={validationErrors.cpf.length > 0 || loadingSubmit}> */}
+
+                        {cpfBlock ? (
+                        <Button disabled={validationErrors.cpf.length > 0 || loadingSubmit}>
+                            {loadingSubmit ? (
+                                <span>Cadastrando...</span>
+                            ) : (
+                                <span>Continuar</span>
+                            )}
+                        </Button>
+                        ) : (
                         <Button disabled={loadingSubmit}>
                             {loadingSubmit ? (
                                 <span>Cadastrando...</span>
@@ -289,18 +356,28 @@ export default function Cadastro() {
                                 <span>Continuar</span>
                             )}
                         </Button>
+                        )}
+                        
                     </div>
                 </form>
 
 
                 {/* Termos */}
-                {showTerms && (
+                {/* {showTerms && (
                     <Terms close={()=> setShowTerms(false)} />
-                )}
+                )} */}
 
                 {/* Já participou */}
                 {showParticipated && (
                     <Participated close={()=> setShowParticipated(false)} />
+                )}
+
+                {alert?.open && (
+                    <Alert 
+                    close={()=> setAlert(defaultAlert)}  
+                    title={alert?.title || null}
+                    text={alert?.text || null}
+                    />
                 )}
             </main>
 

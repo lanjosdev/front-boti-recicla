@@ -1,5 +1,5 @@
 // Hooks / Libs:
-// import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 // import { Navigate } from 'react-router-dom';
 
 // Components:
@@ -16,6 +16,12 @@ import './participated.css';
 
 
 export function Participated({ close, underweight }) {
+
+    useEffect(() => {
+        // window.scrollTo(0, 0);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, []);
+
 
 
     return (

@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 import { Header } from "../../components/layout/Header/Header";
 import { Footer } from "../../components/layout/Footer/Footer";
 import { Button } from "../../components/ui/Button/Button";
+import { Alert } from "../../components/ui/Alert/Alert";
 
 // Assets:
 import iconSeta from '../../assets/icons/sinal.webp';
@@ -29,11 +30,23 @@ import './style.css';
 
 
 export default function Instrucoes() {
+    // Constantes do componente
+    const configsApp = JSON.parse(Cookies.get(APP_CONSTANTS.COOKIE_CONFIG_NAME) || null) || {
+        "COOKIES_EXPIRES": 7
+    };
+    const cookiesExpires = configsApp.COOKIES_EXPIRES;
     const navigate = useNavigate();
+
     // Estados do componente:
     const [loadingSubmit, setLoadingSubmit] = useState(false);
 
     // Logica UI:
+    const defaultAlert = {
+        open: false,
+        title: 'Aviso',
+        text: null
+    };
+    const [alert, setAlert] = useState(defaultAlert);
 
 
 
@@ -41,6 +54,8 @@ export default function Instrucoes() {
     useEffect(()=> {
         function initializePage() {
             console.log('Effect /Instrucoes');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         } 
         initializePage();
     }, []);
@@ -64,7 +79,8 @@ export default function Instrucoes() {
                     };
                     Cookies.set(APP_CONSTANTS.COOKIE_RESULTS_NAME, JSON.stringify(dataResults), { 
                         secure: true,
-                        sameSite: 'Strict'
+                        sameSite: 'Strict',
+                        expires: cookiesExpires
                     });
                     
                     navigate('/resultados');
@@ -74,7 +90,12 @@ export default function Instrucoes() {
                 console.warn('Success False:', response.message);
 
                 if(response.message == 'error') {
-                    toast.error('Ops, houve um erro');
+                    // toast.error('Ops, houve um erro');
+                    setAlert({
+                        open: true,
+                        title: 'Ops, houve um erro',
+                        text: 'Tente novamente'
+                    });
                 }
             }
             else {
@@ -91,7 +112,12 @@ export default function Instrucoes() {
                 navigate('/');
                 return;
             }
-            toast.error('Ops, houve um erro');
+            // toast.error('Ops, houve um erro');
+            setAlert({
+                open: true,
+                title: 'Ops, houve um erro',
+                text: error.response?.message || 'Tente novamente'
+            });
         }
     }
 
@@ -122,7 +148,8 @@ export default function Instrucoes() {
                 const idParticipation = response.data.id_participation;
                 Cookies.set(APP_CONSTANTS.COOKIE_ID_PARTICIPATION_NAME, idParticipation, { 
                     secure: true,
-                    sameSite: 'Strict'
+                    sameSite: 'Strict',
+                    expires: cookiesExpires
                 });
                 // toast.success('Pesagem liberada');
 
@@ -151,15 +178,30 @@ export default function Instrucoes() {
                             navigate('/confirma-pesagem');
                         }
                         else {
-                            toast.warn(response.message);
+                            // toast.warn(response.message);
+                            setAlert({
+                                open: true,
+                                title: 'Aviso',
+                                text: response.message
+                            });
                         }
         
                         break;
                     case 'error':
-                        toast.error('Ops, houve um erro');
+                        // toast.error('Ops, houve um erro');
+                        setAlert({
+                            open: true,
+                            title: 'Ops, houve um erro',
+                            text: 'Tente novamente'
+                        });
                         break;
                     default:
-                        toast.warn(response.message);
+                        // toast.warn(response.message);
+                        setAlert({
+                            open: true,
+                            title: 'Aviso',
+                            text: response.message
+                        });
                 }
             }
             else {
@@ -175,7 +217,12 @@ export default function Instrucoes() {
                 navigate('/');
                 return;
             }
-            toast.error('Ops, houve um erro');
+            // toast.error('Ops, houve um erro');
+            setAlert({
+                open: true,
+                title: 'Ops, houve um erro',
+                text: 'Tente novamente'
+            });
         }
 
         
@@ -251,6 +298,15 @@ export default function Instrucoes() {
                 <div className="bg_imgBlock">
                     <img src={imgBg} alt="" />
                 </div>
+
+
+                {alert?.open && (
+                    <Alert 
+                    close={()=> setAlert(defaultAlert)}  
+                    title={alert?.title || null}
+                    text={alert?.text || null}
+                    />
+                )}
             </main>
 
             <Footer />

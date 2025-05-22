@@ -2,5 +2,7 @@
     "CODIGOS": [
         "botimedina",
         "botialok"
-    ]
+    ],
+    "COOKIES_EXPIRES": 7,
+    "CPF_BLOCK": true
 }

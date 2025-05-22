@@ -68,6 +68,8 @@ export default function Resultados() {
                         ...resultsCookie,
                         carbon: resultsCookie.weight * 1.7
                     }));
+
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
                 else {
                     navigate('/instrucoes');
@@ -134,7 +136,10 @@ export default function Resultados() {
                                 </p>
 
                                 <div className="data">
-                                    <AnimateNums valorFinal={dataResults.credits} />
+                                    <AnimateNums 
+                                    valorFinal={dataResults.credits} 
+                                    formatBr={true}
+                                    />
                                 </div>
                                 <p className="data_details txt_emphasis">
                                     créditos

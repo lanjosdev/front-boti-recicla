@@ -1,0 +1,42 @@
+.Alert {
+    border: 4px solid yellow;
+    background-color: var(--color-bg-1);
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5.5rem;
+
+    padding: 6rem 2.5rem 2.5rem;
+
+    .container_text {
+        /* border: 2px solid blue; */
+        padding: 1.5rem;
+
+        h2 {
+            font-size: 2.7rem;
+            letter-spacing: 0.01rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .block_text {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+
+            font-size: 1.8rem;
+            line-height: 130%;
+            /* color: red; */
+        }
+    }
+
+    .Button {
+        max-width: 22rem;
+    }
+}

@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 import { Header } from "../../components/layout/Header/Header";
 import { Footer } from "../../components/layout/Footer/Footer";
 import { Button } from "../../components/ui/Button/Button";
+import { Alert } from "../../components/ui/Alert/Alert";
 import { LoadingScreen } from "../../components/ui/LoadingScreen/LoadingScreen";
 
 // Assets:
@@ -30,12 +31,24 @@ import './style.css';
 
 
 export default function ConfirmaPesagem() {
+    // Constantes do componente
+    const configsApp = JSON.parse(Cookies.get(APP_CONSTANTS.COOKIE_CONFIG_NAME) || null) || {
+        "COOKIES_EXPIRES": 7
+    };
+    const cookiesExpires = configsApp.COOKIES_EXPIRES;
     const navigate = useNavigate();
+
     // Estados do componente:
     const [loadingSubmit, setLoadingSubmit] = useState(false);
     const [loadingResults, setLoadingResults] = useState(false);
 
     // Logica UI:
+    const defaultAlert = {
+        open: false,
+        title: 'Aviso',
+        text: null
+    };
+    const [alert, setAlert] = useState(defaultAlert);
     
 
 
@@ -48,6 +61,8 @@ export default function ConfirmaPesagem() {
             if(!idParticipationCookie) {
                 navigate('/instrucoes');
             }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         } 
         initializePage();
     }, [navigate]);
@@ -82,7 +97,8 @@ export default function ConfirmaPesagem() {
                         };
                         Cookies.set(APP_CONSTANTS.COOKIE_RESULTS_NAME, JSON.stringify(dataResults), { 
                             secure: true,
-                            sameSite: 'Strict'
+                            sameSite: 'Strict',
+                            expires: cookiesExpires
                         });
                         clearIntervalGetResults(intervalId);
                         
@@ -94,10 +110,20 @@ export default function ConfirmaPesagem() {
                     clearIntervalGetResults(intervalId);
 
                     if(response.message == 'error') {
-                        toast.error('Ops, houve um erro');
+                        // toast.error('Ops, houve um erro');
+                        setAlert({
+                            open: true,
+                            title: 'Ops, houve um erro',
+                            text: 'Tente novamente'
+                        });
                         return;
                     }
-                    toast.warn(response.message);
+                    // toast.warn(response.message);
+                    setAlert({
+                        open: true,
+                        title: 'Aviso',
+                        text: response.message
+                    });
 
                     // switch(response.message) {
 
@@ -123,7 +149,12 @@ export default function ConfirmaPesagem() {
             catch(error) {
                 console.error('DETALHES DO ERRO:', error);
                 clearIntervalGetResults(intervalId);
-                toast.error('Ops, houve um erro');
+                // toast.error('Ops, houve um erro');
+                setAlert({
+                    open: true,
+                    title: 'Ops, houve um erro',
+                    text: JSON.stringify(error || null) || 'Tente novamente'
+                });
             }
         }, 1500);
     }
@@ -198,10 +229,20 @@ export default function ConfirmaPesagem() {
                         getResults(idUserCookie);
                         break;
                     case 'error':
-                        toast.error('Ops, houve um erro');
+                        // toast.error('Ops, houve um erro');
+                        setAlert({
+                            open: true,
+                            title: 'Ops, houve um erro',
+                            text: 'Tente novamente'
+                        });
                         break;
                     default:
-                        toast.warn(response.message);
+                        // toast.warn(response.message);
+                        setAlert({
+                            open: true,
+                            title: 'Aviso',
+                            text: response.message
+                        });
                 }
             }
             else {
@@ -212,12 +253,17 @@ export default function ConfirmaPesagem() {
             console.error('DETALHES DO ERRO:', error);
             
             if(error.response?.status === 401) {
-                toast.warn('Sessão expirada');
+                toast.warn('Sessão expirada por tempo esgotado');
                 setLoadingSubmit(false);
                 navigate('/');
                 return;
             }
-            toast.error('Ops, houve um erro');
+            // toast.error('Ops, houve um erro');
+            setAlert({
+                open: true,
+                title: 'Ops, houve um erro',
+                text: 'Tente novamente'
+            });
         }
 
         
@@ -250,7 +296,7 @@ export default function ConfirmaPesagem() {
 
 
                 <div className="container_btn">
-                    <Button onClick={handleSubmitFinish} disabled={loadingSubmit}>
+                    <Button onClick={handleSubmitFinish} disabled={loadingSubmit || loadingResults}>
                         {loadingSubmit ? (
                             <span>Convertendo...</span>
                         ) : (
@@ -267,6 +313,15 @@ export default function ConfirmaPesagem() {
                     </p>
                     <img src={imgBg} alt="" />
                 </div>
+
+
+                {alert?.open && (
+                    <Alert 
+                    close={()=> setAlert(defaultAlert)}  
+                    title={alert?.title || null}
+                    text={alert?.text || null}
+                    />
+                )}
             </main>
 
             <Footer />

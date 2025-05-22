@@ -80,16 +80,23 @@
             }
         }
 
-        .alert_terms {
-            padding-left: 1rem;
-            font-size: 1.4rem;
+        .terms {
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
 
-            .call_terms {
-                cursor: pointer;
+            .term {
+                display: flex;
+                align-items: flex-start;
+                gap: 0.7rem;
+
+                font-size: 1.4rem;
+
+                > p {
+                /* color: red; */
+                transform: translateY(-17%);
             }
-            
-            [disabled] {
-                opacity: 1;
             }
         }
     }
