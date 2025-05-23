@@ -31,10 +31,8 @@ import './style.css';
 
 export default function Instrucoes() {
     // Constantes do componente
-    const configsApp = JSON.parse(Cookies.get(APP_CONSTANTS.COOKIE_CONFIG_NAME) || null) || {
-        "COOKIES_EXPIRES": 7
-    };
-    const cookiesExpires = configsApp.COOKIES_EXPIRES;
+    const configsApp = JSON.parse(Cookies.get(APP_CONSTANTS.COOKIE_CONFIG_NAME) || null);
+    const cookiesExpires = configsApp?.COOKIES_EXPIRES || 7;
     const navigate = useNavigate();
 
     // Estados do componente:

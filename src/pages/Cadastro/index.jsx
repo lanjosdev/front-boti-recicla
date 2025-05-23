@@ -37,10 +37,9 @@ import './style.css';
 export default function Cadastro() {
     // Constantes do componente:
     const configsApp = JSON.parse(Cookies.get(APP_CONSTANTS.COOKIE_CONFIG_NAME) || null);
-    const cookiesExpires = configsApp.COOKIES_EXPIRES || 7;
-    console.log(cookiesExpires)
-    const cpfBlock = configsApp.CPF_BLOCK || false;
-    console.log(cpfBlock)
+    const cookiesExpires = configsApp?.COOKIES_EXPIRES || 7;
+    // const cpfBlock = true;
+    // console.log(cpfBlock)
 
     const navigate = useNavigate();
     
@@ -316,7 +315,7 @@ export default function Cadastro() {
                             {/* <input type="checkbox" name="" id="" required /> */}
                             <p>
                                 Ao se cadastrar, você concorda
-                                com os termos da nossa <a className="txt_link" href="/termos-boticario.pdf" target="_blank">Política de Privacidade e Regulamento</a>.
+                                com os termos da nossa <a className="txt_link" href="./regulamento-boticario.pdf" target="_blank">Política de Privacidade e Regulamento</a>.
                             </p>
                         </div>
 
@@ -340,15 +339,16 @@ export default function Cadastro() {
 
                     <div className="container_btn">
 
-                        {cpfBlock ? (
-                        <Button disabled={validationErrors.cpf.length > 0 || loadingSubmit}>
+                        {/* Com bloqueio de validação */}
+                        {/* <Button disabled={validationErrors.cpf.length > 0 || loadingSubmit}>
                             {loadingSubmit ? (
                                 <span>Cadastrando...</span>
                             ) : (
                                 <span>Continuar</span>
                             )}
-                        </Button>
-                        ) : (
+                        </Button> */}
+                        
+                        {/* Sem bloqueio de validação */}
                         <Button disabled={loadingSubmit}>
                             {loadingSubmit ? (
                                 <span>Cadastrando...</span>
@@ -356,7 +356,7 @@ export default function Cadastro() {
                                 <span>Continuar</span>
                             )}
                         </Button>
-                        )}
+                    
                         
                     </div>
                 </form>

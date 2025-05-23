@@ -48,17 +48,17 @@ export default function Resultados() {
                 console.log(configApp)
                 const resultsCookie = JSON.parse(Cookies.get(APP_CONSTANTS.COOKIE_RESULTS_NAME) || null);
                 // const resultsCookie = {
-                //     name: 'Lucas Anjos botialok',
+                //     name: 'Lucas Anjos Botialok debOTIMedina de Medina Alok de Souza',
                 //     weight: 80255,
                 //     credits: 42000,
                 // };
 
                 if(resultsCookie) {
                     if(Array.isArray(configApp?.CODIGOS)) {
-                        resultsCookie.name = resultsCookie.name
-                            .replace(new RegExp(`\\b${configApp.CODIGOS[0]}\\b`, 'gi'), '')
-                            .replace(new RegExp(`\\b${configApp.CODIGOS[1]}\\b`, 'gi'), '')
-                            .replace(/\s{2,}/g, ' ')  // Remove espaços duplos
+                        resultsCookie.name = resultsCookie.name.toLocaleLowerCase()
+                            .replaceAll(configApp.CODIGOS[0], '')
+                            .replaceAll(configApp.CODIGOS[1], '')
+                            // .replace(/\s{2,}/g, ' ')  // Remove espaços duplos
                             .trim(); // Remove espaços nas pontas
                     }
                     console.log(resultsCookie);
