@@ -1,7 +1,7 @@
 // Hooks / Libs:
 import Cookies from "js-cookie";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 // CONSTANTES:
 import { APP_CONSTANTS } from "../../config/appConstants";
@@ -41,7 +41,7 @@ export default function Cadastro() {
     // const cpfBlock = true;
     // console.log(cpfBlock)
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     
     // Estados do componente:
     const [loadingSubmit, setLoadingSubmit] = useState(false);
@@ -174,9 +174,10 @@ export default function Cadastro() {
                 });
 
                 // toast.success('Cadastro realizado com sucesso.');
-                CookiesUtils.RemoveParticipation();
+                await CookiesUtils.RemoveParticipation();
                 
-                navigate('/instrucoes');
+                // navigate('/instrucoes');
+                window.location.href = '/instrucoes';
             }
             else if(response.success == false) {
                 console.warn('Success False:', response.message);
@@ -203,8 +204,8 @@ export default function Cadastro() {
                         // toast.warn(response.message);
                         setAlert({
                             open: true,
-                            title: 'Aviso',
-                            text: response.message
+                            title: 'Ops, houve uma falha',
+                            text: 'Tente novamente'
                         });
                 }
 
@@ -218,7 +219,11 @@ export default function Cadastro() {
         }
         catch(error) {
             console.error('DETALHES DO ERRO:', error);
-            setValidationErrors(['Houve um erro.']); 
+            setAlert({
+                open: true,
+                title: 'Ops, houve um erro',
+                text: 'Tente novamente'
+            });
         }
 
         
@@ -339,23 +344,22 @@ export default function Cadastro() {
 
                     <div className="container_btn">
 
-                        {/* Com bloqueio de validação */}
-                        {/* <Button disabled={validationErrors.cpf.length > 0 || loadingSubmit}>
-                            {loadingSubmit ? (
-                                <span>Cadastrando...</span>
-                            ) : (
-                                <span>Continuar</span>
-                            )}
-                        </Button> */}
-                        
-                        {/* Sem bloqueio de validação */}
-                        <Button disabled={loadingSubmit}>
+                        <Button disabled={validationErrors.cpf.length > 0 || loadingSubmit}>
                             {loadingSubmit ? (
                                 <span>Cadastrando...</span>
                             ) : (
                                 <span>Continuar</span>
                             )}
                         </Button>
+                        
+                        {/* Sem bloqueio de validação */}
+                        {/* <Button disabled={loadingSubmit}>
+                            {loadingSubmit ? (
+                                <span>Cadastrando...</span>
+                            ) : (
+                                <span>Continuar</span>
+                            )}
+                        </Button> */}
                     
                         
                     </div>

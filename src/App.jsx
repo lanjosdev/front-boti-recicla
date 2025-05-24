@@ -1,12 +1,10 @@
 // Hooks / Libs:
-import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 import { BrowserRouter } from 'react-router';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-import { APP_CONSTANTS } from './config/appConstants';
 // Configs App:
 import { getConfigApp } from './config/appGetConfig';
 
@@ -31,27 +29,29 @@ export default function App() {
 
   useEffect(()=> {
     async function checkConfigApp() {
-      const defaultConfigApp = {
-          "CODIGOS": [
-              "botimedina",
-              "botialok"
-          ],
-          "COOKIES_EXPIRES": 7,
-          "CPF_BLOCK": true
-      };
+      await getConfigApp();
+      // console.log('await')
 
-      try {
-        await getConfigApp();
-        // console.log('await')
-      }
-      catch(error) {
-        console.log(error);
-        Cookies.set(APP_CONSTANTS.COOKIE_CONFIG_NAME, JSON.stringify(defaultConfigApp), {
-            secure: true,
-            sameSite: 'Strict',
-            expires: 7
-        });
-      }
+      // const defaultConfigApp = {
+      //     "CODIGOS": [
+      //         "botimedina",
+      //         "botialok"
+      //     ],
+      //     "COOKIES_EXPIRES": 7,
+      //     "CPF_BLOCK": true
+      // };
+
+      // try {
+      //   await getConfigApp();
+      // }
+      // catch(error) {
+      //   console.log(error);
+      //   Cookies.set(APP_CONSTANTS.COOKIE_CONFIG_NAME, JSON.stringify(defaultConfigApp), {
+      //       secure: true,
+      //       sameSite: 'Strict',
+      //       expires: 7
+      //   });
+      // }
 
       // console.log('fim')
       setLoading(false);
@@ -62,16 +62,15 @@ export default function App() {
 
   return (
     <BrowserRouter>  
-      {/* <UserProvider> */}
-        {loading ? (
-          <LoadingScreen/>
-        ) : (
-          <AppRoutes/>
-        )}
 
-        <ToastContainer autoClose={3000} limit={1} closeOnClick />
+      {loading ? (
+        <LoadingScreen/>
+      ) : (
+        <AppRoutes/>
+      )}
+
+      <ToastContainer autoClose={3000} limit={1} closeOnClick />
         
-      {/* </UserProvider> */}
     </BrowserRouter>
   )
 }
