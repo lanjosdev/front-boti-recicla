@@ -32,10 +32,8 @@ import './style.css';
 
 export default function ConfirmaPesagem() {
     // Constantes do componente
-    const configsApp = JSON.parse(Cookies.get(APP_CONSTANTS.COOKIE_CONFIG_NAME) || null) || {
-        "COOKIES_EXPIRES": 7
-    };
-    const cookiesExpires = configsApp.COOKIES_EXPIRES;
+    const configsApp = JSON.parse(Cookies.get(APP_CONSTANTS.COOKIE_CONFIG_NAME) || null);
+    const cookiesExpires = configsApp?.COOKIES_EXPIRES || 7;
     const navigate = useNavigate();
 
     // Estados do componente:
@@ -88,7 +86,7 @@ export default function ConfirmaPesagem() {
     
                 if(response.success) {
                     if(response.data.credits != null) {
-                        console.log('=====================PEGOU RESULTADOS========================');
+                        // console.log('=====================PEGOU RESULTADOS========================');
                         
                         const dataResults = {
                             name: response.data.name || null,
@@ -121,8 +119,8 @@ export default function ConfirmaPesagem() {
                     // toast.warn(response.message);
                     setAlert({
                         open: true,
-                        title: 'Aviso',
-                        text: response.message
+                        title: 'Ops, houve uma falha',
+                        text: 'Tente novamente'
                     });
 
                     // switch(response.message) {
@@ -153,7 +151,7 @@ export default function ConfirmaPesagem() {
                 setAlert({
                     open: true,
                     title: 'Ops, houve um erro',
-                    text: JSON.stringify(error || null) || 'Tente novamente'
+                    text: 'Tente novamente'
                 });
             }
         }, 1500);
@@ -219,7 +217,12 @@ export default function ConfirmaPesagem() {
                     // }
 
                     case 'Nenhum usuário encontrado para o id informado. Por favor, verifique.':
-                        console.error('APAGAAA TUDDDOOOO COOKIES??????')
+                        // console.error('APAGAAA TUDDDOOOO COOKIES??????')
+                        setAlert({
+                            open: true,
+                            title: 'Aviso',
+                            text: response?.message
+                        });
                         break;
                     case 'Usuário informado não tem nenhuma pesagem para finalizar.':
                         toast.warn('Necessário iniciar a pesagem');
@@ -240,8 +243,8 @@ export default function ConfirmaPesagem() {
                         // toast.warn(response.message);
                         setAlert({
                             open: true,
-                            title: 'Aviso',
-                            text: response.message
+                            title: 'Ops, houve uma falha',
+                            text: 'Tente novamente'
                         });
                 }
             }
@@ -265,7 +268,6 @@ export default function ConfirmaPesagem() {
                 text: 'Tente novamente'
             });
         }
-
         
         // const endTime = performance.now();
         // const seconds = ((endTime - startTime) / 1000).toFixed(2);

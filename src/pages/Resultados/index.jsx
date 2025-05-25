@@ -45,7 +45,7 @@ export default function Resultados() {
 
             try {
                 const configApp = JSON.parse(Cookies.get(APP_CONSTANTS.COOKIE_CONFIG_NAME) || null);
-                console.log(configApp)
+                // console.log(configApp)
                 const resultsCookie = JSON.parse(Cookies.get(APP_CONSTANTS.COOKIE_RESULTS_NAME) || null);
                 // const resultsCookie = {
                 //     name: 'Lucas Anjos Botialok debOTIMedina de Medina Alok de Souza',

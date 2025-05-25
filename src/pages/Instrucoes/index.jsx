@@ -71,9 +71,9 @@ export default function Instrucoes() {
                 if(response.data.finished_interaction) {
                     
                     const dataResults = {
-                        name: response.data.name || null,
-                        weight: response.data.weight, 
-                        credits: response.data.credits 
+                        name: response?.data?.name || null,
+                        weight: response?.data?.weight, 
+                        credits: response?.data?.credits 
                     };
                     Cookies.set(APP_CONSTANTS.COOKIE_RESULTS_NAME, JSON.stringify(dataResults), { 
                         secure: true,
@@ -95,6 +95,13 @@ export default function Instrucoes() {
                         text: 'Tente novamente'
                     });
                 }
+                else {
+                    setAlert({
+                        open: true,
+                        title: 'Ops, houve uma falha',
+                        text: 'Tente novamente'
+                    });
+                }
             }
             else {
                 console.error('Erro inesperado');
@@ -104,7 +111,7 @@ export default function Instrucoes() {
         catch(error) {
             console.error('DETALHES DO ERRO:', error);
 
-            if(error.response?.status === 401) {
+            if(error?.response?.status === 401) {
                 toast.warn('Você não está autenticado');
                 setLoadingSubmit(false);
                 navigate('/');
@@ -114,7 +121,7 @@ export default function Instrucoes() {
             setAlert({
                 open: true,
                 title: 'Ops, houve um erro',
-                text: error.response?.message || 'Tente novamente'
+                text: 'Tente novamente'
             });
         }
     }
@@ -143,7 +150,7 @@ export default function Instrucoes() {
             console.log(response);
             
             if(response.success) {
-                const idParticipation = response.data.id_participation;
+                const idParticipation = response?.data?.id_participation;
                 Cookies.set(APP_CONSTANTS.COOKIE_ID_PARTICIPATION_NAME, idParticipation, { 
                     secure: true,
                     sameSite: 'Strict',
@@ -197,8 +204,8 @@ export default function Instrucoes() {
                         // toast.warn(response.message);
                         setAlert({
                             open: true,
-                            title: 'Aviso',
-                            text: response.message
+                            title: 'Ops, houve uma falha',
+                            text: 'Tente novamente'
                         });
                 }
             }
@@ -209,7 +216,7 @@ export default function Instrucoes() {
         catch(error) {
             console.error('DETALHES DO ERRO:', error);
 
-            if(error.response?.status === 401) {
+            if(error?.response?.status === 401) {
                 toast.warn('Você não está autenticado');
                 setLoadingSubmit(false);
                 navigate('/');

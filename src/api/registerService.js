@@ -14,7 +14,7 @@ const Register = async (bodyReq) => {
     //     email: email,
     //     cpf: cpf
     // }
-    console.log(bodyReq)
+    // console.log(bodyReq)
     const response = await api.post('/register', bodyReq);
 
     // console.log(response.data);

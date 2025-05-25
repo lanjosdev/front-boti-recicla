@@ -31,7 +31,7 @@ export async function getConfigApp() {
             expires: 7
         });
     }
-    catch (error) {
+    catch(error) {
         console.error('ERRO AO CARREGAR CONFIGURAÇÕES DO APP', error);
         // Cookies.remove(APP_CONSTANTS.COOKIE_CONFIG_NAME);
         Cookies.set(APP_CONSTANTS.COOKIE_CONFIG_NAME, JSON.stringify(defaultConfigApp), {
@@ -41,4 +41,3 @@ export async function getConfigApp() {
         });
     }
 }
-// getConfigApp();

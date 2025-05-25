@@ -1,7 +1,7 @@
 // Hooks / Libs:
 import Cookies from "js-cookie";
 import { useState, useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // CONSTANTES:
 import { APP_CONSTANTS } from "../../config/appConstants";
@@ -38,10 +38,7 @@ export default function Cadastro() {
     // Constantes do componente:
     const configsApp = JSON.parse(Cookies.get(APP_CONSTANTS.COOKIE_CONFIG_NAME) || null);
     const cookiesExpires = configsApp?.COOKIES_EXPIRES || 7;
-    // const cpfBlock = true;
-    // console.log(cpfBlock)
-
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     
     // Estados do componente:
     const [loadingSubmit, setLoadingSubmit] = useState(false);
@@ -156,17 +153,17 @@ export default function Cadastro() {
             // }
 
             const response = await RegisterService.Register(bodyReq);
-            console.log(response);
+            // console.log(response);
             
             if(response.success) {
-                const token = response.data.token;
+                const token = response?.data?.token;
                 Cookies.set(APP_CONSTANTS.COOKIE_AUTH_TOKEN_NAME, token, { 
                     secure: true,
                     sameSite: 'Strict',
                     expires: cookiesExpires
                 });
 
-                const idUser = response.data.id_user_register;
+                const idUser = response?.data?.id_user_register;
                 Cookies.set(APP_CONSTANTS.COOKIE_ID_USER_NAME, idUser, { 
                     secure: true,
                     sameSite: 'Strict',
@@ -176,17 +173,13 @@ export default function Cadastro() {
                 // toast.success('Cadastro realizado com sucesso.');
                 await CookiesUtils.RemoveParticipation();
                 
-                // navigate('/instrucoes');
-                window.location.href = '/instrucoes';
+                navigate('/instrucoes');
+                // window.location.href = '/instrucoes';
             }
             else if(response.success == false) {
                 console.warn('Success False:', response.message);
 
                 switch(response.message) {
-                    // {
-                    //     "success": false,
-                    //     "message": "CPF já registrado. Por favor, verifique."
-                    // }
 
                     case 'CPF já registrado. Por favor, verifique.':
                         setShowParticipated(true);
@@ -208,10 +201,6 @@ export default function Cadastro() {
                             text: 'Tente novamente'
                         });
                 }
-
-                // if(response.message == "CPF já registrado. Por favor, verifique.") {
-                //     setValidationErrors(prev => ({...prev, cpf: ['CPF já cadastrado']}));
-                // }
             }
             else {
                 toast.error('Erro inesperado');
@@ -226,7 +215,6 @@ export default function Cadastro() {
             });
         }
 
-        
         // const endTime = performance.now();
         // const seconds = ((endTime - startTime) / 1000).toFixed(2);
         setLoadingSubmit(false);
@@ -332,16 +320,6 @@ export default function Cadastro() {
                         </div> */}
                     </div>
 
-                    {/* <p className="alert_terms">
-                        Ao se cadastrar, você concorda <br />
-                        com os termos da nossa <a className="call_terms txt_link" href={docPDF} download>Política de Responsabilidade</a>.
-                    </p>
-                    <p className="alert_terms">
-                        Ao se cadastrar, você concorda <br />
-                        com os termos da nossa <a className="call_terms txt_link" href={docPDF} target="_blank">Política de Responsabilidade</a>.
-                    </p> */}
-
-
                     <div className="container_btn">
 
                         <Button disabled={validationErrors.cpf.length > 0 || loadingSubmit}>
@@ -360,7 +338,6 @@ export default function Cadastro() {
                                 <span>Continuar</span>
                             )}
                         </Button> */}
-                    
                         
                     </div>
                 </form>
